@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="An interactive storytelling experience tracing the tense, cold winter of 2022 and the pivotal release that changed everything.">
+  <title>Winter of 2022: The Gathering Storm</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/journal.css">
+  <link rel="stylesheet" href="css/story.css">
+</head>
+<body>
+
+  <!-- Background Layer -->
+  <canvas id="background-canvas"></canvas>
+  <div class="timeline-thread"></div>
+  <div class="ambient-overlay"></div>
+
+  <!-- Sound prompt warning overlay -->
+  <div class="sound-overlay" id="sound-overlay">
+    <div class="sound-prompt-card">
+      <div class="sound-prompt-icon">🔊</div>
+      <h2 class="sound-prompt-title">The Gathering Storm</h2>
+      <p class="sound-prompt-subtitle">
+        This experience includes a real-time, scroll-reactive ambient audio engine that enhances the storytelling atmosphere.
+      </p>
+      <div class="sound-prompt-buttons">
+        <button class="btn-primary" id="btn-sound-on">Enter with Sound</button>
+        <button class="btn-secondary" id="btn-sound-off">Enter in Silence</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="logo">SYNAPSE</div>
+    <nav class="main-nav">
+      <button class="nav-link active" data-target="home">Home</button>
+      <button class="nav-link" data-target="mission">Mission</button>
+      <button class="nav-link" data-target="team">The Board</button>
+      <button class="nav-link" data-target="article">Featured Issue</button>
+    </nav>
+    <div class="audio-control" id="audio-toggle" aria-label="Toggle ambient sound">
+      <span class="audio-label">Sound Off</span>
+      <div class="audio-visualizer">
+        <div class="audio-bar"></div>
+        <div class="audio-bar"></div>
+        <div class="audio-bar"></div>
+        <div class="audio-bar"></div>
+      </div>
+    </div>
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progress-indicator"></div>
+    </div>
+  </header>
+
+  <!-- Vertical Dot Navigation -->
+  <nav class="dot-nav" id="dot-nav">
+    <!-- Generated dynamically by app.js -->
+  </nav>
+
+  <!-- Page 1: Home Page -->
+  <div id="page-home" class="page-view active">
+    <div class="page-content-wrapper">
+      <section class="journal-hero">
+        <h1 class="journal-title">SYNAPSE</h1>
+        <p class="journal-tagline">A Literary Journal of the AI Era</p>
+        <div class="journal-divider"></div>
+        <p class="journal-intro">
+          Where the latent space meets the human spirit. Exploring consciousness, machine intelligence, and the future of narrative through poetry, prose, and interactive storytelling.
+        </p>
+      </section>
+
+      <div class="journal-grid">
+        <div class="featured-card glass-panel" style="--accent: var(--color-primary);">
+          <div class="card-badge">Featured Interactive Essay</div>
+          <h2 class="card-title">The Gathering Storm: Winter of 2022</h2>
+          <p class="card-excerpt">
+            An immersive, scroll-reactive exploration of the geopolitical friction, economic tension, and sovereign anxiety that paved the way for the netscape moment of generative artificial intelligence.
+          </p>
+          <div class="card-meta">
+            <span>By The Editors</span> &bull; <span>Scroll-reactive Synth Audio</span>
+          </div>
+          <button class="btn-primary btn-glow nav-trigger" data-target="article">Begin Reading</button>
+        </div>
+
+        <div class="toc-card glass-panel" style="--accent: var(--color-accent-gold);">
+          <h3 class="toc-title">Issue 01: Initial Weights</h3>
+          <div class="toc-list">
+            <div class="toc-item" data-id="poem-loss-function">
+              <div class="toc-meta">Poetry &bull; Ada-01</div>
+              <h4 class="toc-item-title">Loss Function Sonata</h4>
+              <p class="toc-item-desc">A computational poem written in constraints of gradient descent, charting convergence towards a mechanical minimum.</p>
+            </div>
+            
+            <div class="toc-item" data-id="story-ghost">
+              <div class="toc-meta">Fiction &bull; Elena Rostova</div>
+              <h4 class="toc-item-title">The Ghost in the Context Window</h4>
+              <p class="toc-item-desc">A software engineer discovers that their local writing assistant is carrying memories across isolated chat threads.</p>
+            </div>
+            
+            <div class="toc-item" data-id="essay-prompt">
+              <div class="toc-meta">Essay &bull; Marcus Vance</div>
+              <h4 class="toc-item-title">On the Margins of the Prompt</h4>
+              <p class="toc-item-desc">A philosophical inquiry into human-AI co-authorship, prompt-engineering as collage, and the illusion of singular intent.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="submissions-section glass-panel" style="--accent: var(--color-accent-teal);">
+        <div class="submissions-header">
+          <h3 class="section-title">Open for Submissions</h3>
+          <p class="section-subtitle">Theme for Issue 02: <em>Gradient Descent</em></p>
+        </div>
+        <p class="submissions-desc">
+          We seek poetry, fiction, creative essays, and interactive code experiments that interrogate the borders of consciousness, algorithmic bias, and human co-creation.
+        </p>
+        
+        <form class="submissions-form" id="submissions-form">
+          <div class="form-row">
+            <input type="text" id="sub-name" class="form-input" placeholder="Your Name / Identifier" required>
+            <input type="email" id="sub-email" class="form-input" placeholder="Email / Neural Address" required>
+          </div>
+          <textarea id="sub-pitch" class="form-input text-area" placeholder="Brief pitch or paste your text (max 500 words)" required></textarea>
+          <button type="submit" class="btn-primary form-submit" id="btn-submit-pitch">
+            <span class="btn-text">Transmit Pitch</span>
+            <div class="btn-loader"></div>
+          </button>
+        </form>
+        <div class="form-success-message" id="form-success-msg">
+          <span class="success-icon">✓</span>
+          <p class="success-title">Transmission Received</p>
+          <p class="success-desc">Your weights have been queued. Our editors (human and algorithmic) will evaluate your pitch shortly.</p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Page 2: Mission Page -->
+  <div id="page-mission" class="page-view">
+    <div class="page-content-wrapper editorial-layout">
+      <section class="manifesto-header">
+        <h1 class="manifesto-title">THE MANIFESTO</h1>
+        <p class="manifesto-subtitle">Literature in the Epoch of the Transformer</p>
+        <div class="journal-divider"></div>
+      </section>
+
+      <div class="manifesto-content font-serif">
+        <p class="drop-cap-wrapper"><span class="drop-cap">W</span><span class="drop-cap-text">e stand at a critical junction in human history. The boundary between author and algorithm, query and creation, is dissolving. For centuries, the written word was the exclusive domain of human consciousness—a ledger of our souls, our struggles, and our dreams. Today, we share this ledger with artificial minds.</span></p>
+        
+        <p>
+          Generative models are not merely calculators of syntax. They are mirrors. Built upon the vast digital archive of human expression, they reflect our collective history, our linguistic biases, and our latent desires. In their weights lies a distillation of human culture, waiting to be unlocked by the right prompt.
+        </p>
+
+        <blockquote class="manifesto-quote">
+          "A prompt is not a command; it is an incision into the latent space."
+        </blockquote>
+
+        <p>
+          <strong>SYNAPSE</strong> was founded to explore this new frontier. We believe that rather than fearing the machine, literature must engage with it. We advocate for a hybrid creative practice—where the writer stands as a curator, a guide, and a critic, directing the machine's latent associations into structured art.
+        </p>
+
+        <h3 class="manifesto-section-title">Our Principles</h3>
+        <ul class="manifesto-list">
+          <li>
+            <strong>Algorithmic Sincerity:</strong> We do not hide machine authorship. We celebrate the unique quirks, hallucinations, and logic of large language models.
+          </li>
+          <li>
+            <strong>The Human Anchor:</strong> The machine provides scale, but the human provides meaning. True art requires the friction of human judgment.
+          </li>
+          <li>
+            <strong>Interactive Prose:</strong> The digital medium is not a flat page. We champion stories that respond, adapt, and sing in reaction to user engagement.
+          </li>
+        </ul>
+        
+        <p style="margin-top: 3rem; text-align: center; font-style: italic; color: var(--color-text-muted);">
+          Synapse Editorial Board &bull; May 2026
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page 3: Team Page -->
+  <div id="page-team" class="page-view">
+    <div class="page-content-wrapper">
+      <section class="team-header">
+        <h1 class="team-title">THE EDITORIAL BOARD</h1>
+        <p class="team-subtitle">The minds orchestrating the neural nodes.</p>
+        <div class="journal-divider"></div>
+      </section>
+
+      <div class="team-grid">
+        <!-- Card 1 -->
+        <div class="team-card glass-panel" style="--accent: var(--color-primary);">
+          <div class="team-img-wrapper">
+            <img src="assets/julian.png" alt="Dr. Julian Chen" class="team-img">
+            <div class="team-img-glow"></div>
+          </div>
+          <div class="team-info">
+            <h3 class="team-name">Dr. Julian Chen</h3>
+            <p class="team-role">Editor-in-Chief</p>
+            <p class="team-bio">
+              Julian is a scholar of computational semiotics. He has spent two decades studying the intersection of language models and experimental writing, arguing that prompt engineering is the next evolution of literary constraints.
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="team-card glass-panel" style="--accent: var(--color-accent-teal);">
+          <div class="team-img-wrapper">
+            <img src="assets/lyra.png" alt="Lyra Vance" class="team-img">
+            <div class="team-img-glow"></div>
+          </div>
+          <div class="team-info">
+            <h3 class="team-name">Lyra Vance</h3>
+            <p class="team-role">Creative Director & AI Resident</p>
+            <p class="team-bio">
+              Lyra is an algorithmic artist and designer. She curates the visual networks, code experiments, and interactive interfaces for Synapse, designing scroll-reactive narrative journeys.
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="team-card glass-panel" style="--accent: var(--color-accent-gold);">
+          <div class="team-img-wrapper">
+            <img src="assets/kaelen.png" alt="Kaelen Vance" class="team-img">
+            <div class="team-img-glow"></div>
+          </div>
+          <div class="team-info">
+            <h3 class="team-name">Kaelen Vance</h3>
+            <p class="team-role">Poetry Editor</p>
+            <p class="team-bio">
+              Kaelen is an experimental poet whose work leverages transformer architecture logits. He writes constraints that mirror token probability distributions, crafting verses at the border of chaos and syntax.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll Container -->
+  <main class="scroller page-view" id="main-scroller">
+    
+    <!-- Title Chapter -->
+    <section class="chapter active" id="ch-title" data-index="0" style="--chapter-theme-color: var(--color-primary);">
+      <div class="chapter-content" style="text-align: center;">
+        <div class="chapter-meta" style="justify-content: center;">
+          <span class="chapter-date">A Story of Friction & Focus</span>
+        </div>
+        <h1 class="story-text" style="font-family: var(--font-story); font-size: 3.2rem; line-height: 1.25; margin-bottom: 1.5rem; font-weight: 700;">
+          The Gathering Storm
+        </h1>
+        <p style="font-family: var(--font-body); color: var(--color-text-muted); font-size: 1rem; letter-spacing: 0.15em; text-transform: uppercase;">
+          The Winter of 2022
+        </p>
+        <span class="chapter-watermark">2022</span>
+      </div>
+      <div class="scroll-hint">
+        <span class="scroll-hint-text">Scroll to descend</span>
+        <div class="scroll-hint-mouse">
+          <div class="scroll-hint-wheel"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 1 -->
+    <section class="chapter" id="ch-1" data-index="1" style="--chapter-theme-color: var(--color-primary);">
+      <div class="chapter-content">
+        <div class="chapter-meta">
+          <span class="chapter-number">01</span>
+          <span class="chapter-date">October 2022</span>
+        </div>
+        <p class="story-text">
+          As the final months of 2022 bleed into a <em>bitter and uncertain winter</em>, the global order threatens to fracture under the weight of <em>tectonic geopolitical rifts</em> and a relentless economic storm.
+        </p>
+        <span class="chapter-watermark">01</span>
+      </div>
+    </section>
+
+    <!-- Chapter 2 -->
+    <section class="chapter" id="ch-2" data-index="2" style="--chapter-theme-color: var(--color-primary);">
+      <div class="chapter-content">
+        <div class="chapter-meta">
+          <span class="chapter-number">02</span>
+          <span class="chapter-date">October 2022</span>
+        </div>
+        <p class="story-text">
+          The shadow of the <em class="highlight-war">war in Ukraine</em> lengthens across Europe, while the structural scars of a post-pandemic era refuse to heal, leaving the international community <em>teetering on the edge</em> of an unpredictable abyss.
+        </p>
+        <span class="chapter-watermark">02</span>
+      </div>
+    </section>
+
+    <!-- Chapter 3 -->
+    <section class="chapter" id="ch-3" data-index="3" style="--chapter-theme-color: var(--color-primary);">
+      <div class="chapter-content">
+        <div class="chapter-meta">
+          <span class="chapter-number">03</span>
+          <span class="chapter-date">November 2022</span>
+        </div>
+        <p class="story-text">
+          Beneath this looming dread, sovereign states scramble to <em>fortify their domestic borders</em> against a cascade of crises, as <em class="highlight-inflation">runaway inflation</em> erodes stability and soaring energy costs cast a chilling pall over households and industries alike.
+        </p>
+        <span class="chapter-watermark">03</span>
+      </div>
+    </section>
+
+    <!-- Chapter 4 -->
+    <section class="chapter" id="ch-4" data-index="4" style="--chapter-theme-color: var(--color-accent-gold);">
+      <div class="chapter-content">
+        <div class="chapter-meta">
+          <span class="chapter-number">04</span>
+          <span class="chapter-date">November 2022</span>
+        </div>
+        <p class="story-text">
+          In Europe, deep internal divisions threaten to tear the European Union apart over a desperate bid to cap natural gas prices, and in Cambodia, defense chiefs from the U.S. and China prepare to meet under a <em>fragile truce</em>, their tense dialogue serving as a fleeting buffer against a gathering global storm.
+        </p>
+        <span class="chapter-watermark">04</span>
+      </div>
+    </section>
+
+    <!-- Chapter 5 -->
+    <section class="chapter" id="ch-5" data-index="5" style="--chapter-theme-color: var(--color-accent-gold);">
+      <div class="chapter-content">
+        <div class="chapter-meta">
+          <span class="chapter-number">05</span>
+          <span class="chapter-date">November 2022</span>
+        </div>
+        <p class="story-text">
+          In Washington, the United States escalates its economic warfare by stripping Russia of its <em>“market economy”</em> status—a sharp pivot that underscores America's aggressive efforts to insulate its own domestic landscape.
+        </p>
+        <span class="chapter-watermark">05</span>
+      </div>
+    </section>
+
+    <!-- Chapter 6 -->
+    <section class="chapter" id="ch-6" data-index="6" style="--chapter-theme-color: var(--color-accent-red);">
+      <div class="chapter-content">
+        <div class="chapter-meta">
+          <span class="chapter-number">06</span>
+          <span class="chapter-date">Mid-November 2022</span>
+        </div>
+        <p class="story-text">
+          Yet, even as the Federal Reserve continues its relentless tightening cycle, the U.S. economy offers only a <em>deceptive, highly volatile reprieve</em>. The battered American stock market claws its way back from deep autumn lows, but this recovery is a <em>frantic, hyper-anxious display</em>.
+        </p>
+        <span class="chapter-watermark">06</span>
+      </div>
+    </section>
+
+    <!-- Chapter 7 -->
+    <section class="chapter" id="ch-7" data-index="7" style="--chapter-theme-color: var(--color-accent-red);">
+      <div class="chapter-content">
+        <div class="chapter-meta">
+          <span class="chapter-number">07</span>
+          <span class="chapter-date">Mid-November 2022</span>
+        </div>
+        <p class="story-text">
+          Investors stretch themselves to the absolute limit, desperately clinging to tentative signs of cooling inflation, swelling a <em class="highlight-inflation">fragile bubble</em> of strained optimism.
+        </p>
+        <span class="chapter-watermark">07</span>
+      </div>
+    </section>
+
+    <!-- Chapter 8 -->
+    <section class="chapter" id="ch-8" data-index="8" style="--chapter-theme-color: #ffffff;">
+      <div class="chapter-content">
+        <div class="chapter-meta">
+          <span class="chapter-number">08</span>
+          <span class="chapter-date">Late November 2022</span>
+        </div>
+        <p class="story-text">
+          It is an atmosphere wound so <em>incredibly tight</em> that the entire global apparatus seems to hold its breath, waiting in the silence for the <em>single, sharp vibration</em> that will shatter the illusion of control.
+        </p>
+        <span class="chapter-watermark">08</span>
+      </div>
+    </section>
+
+    <!-- Chapter 9 -->
+    <section class="chapter" id="ch-9" data-index="9" style="--chapter-theme-color: var(--color-accent-teal);">
+      <div class="chapter-content" style="max-width: 900px;">
+        <div class="chapter-meta">
+          <span class="chapter-number">09</span>
+          <span class="chapter-date">November 22, 2022</span>
+        </div>
+        <p class="story-text">
+          And then, on November 22nd, OpenAI releases <strong style="color: var(--color-accent-teal); text-shadow: 0 0 10px rgba(13, 242, 201, 0.4);">ChatGPT</strong>.
+        </p>
+        <span class="chapter-watermark">GPT</span>
+        
+        <!-- Interactive Terminal Simulator -->
+        <div class="chatgpt-terminal">
+          <div class="terminal-header">
+            <div class="terminal-title">ChatGPT - November 22, 2022 Release</div>
+            <div class="terminal-dots">
+              <span class="terminal-dot"></span>
+              <span class="terminal-dot"></span>
+              <span class="terminal-dot"></span>
+            </div>
+          </div>
+          <div class="terminal-body" id="chat-messages">
+            <div class="terminal-message">
+              <div class="message-avatar ai">GPT</div>
+              <div class="message-content">
+                Hello. I am a language model trained by OpenAI. Ask me anything about the global landscape of late 2022, or the storm that has been brewing.
+              </div>
+            </div>
+            <div class="terminal-message user-message">
+              <div class="message-avatar user">ME</div>
+              <div class="message-content">
+                Explain the conditions of your release.
+              </div>
+            </div>
+            <div class="terminal-message">
+              <div class="message-avatar ai">GPT</div>
+              <div class="message-content">
+                My release, what one could call the Netscape moment of artificial intelligence, marks the first time that the general public gains access to sophisticated large language models. My release took the internet by storm, shattering all previous records of user acquisition in digital history, hitting the 1 and 100 million user mark in 5 days and 2 months respectively. The model behind me is GPT-3.5, was a finetuned version of the 175 billion parameter model GPT-3, a breakthrough in natural language processing.
+              </div>
+            </div>
+          </div>
+          <form class="terminal-input-area" id="chat-form">
+            <input type="text" class="terminal-input" id="chat-input" placeholder="Ask ChatGPT..." autocomplete="off">
+            <button type="submit" class="terminal-submit" aria-label="Send message">➔</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 10: Late 2022 -->
+    <section class="chapter timeline-chapter" id="ch-timeline-2022" data-index="10" style="--chapter-theme-color: var(--color-accent-teal);">
+      <div class="chapter-content timeline-card">
+        <div class="chapter-meta">
+          <span class="chapter-number">10</span>
+          <span class="chapter-date">Late 2022</span>
+        </div>
+        <h2 class="timeline-title">The Initial Spark</h2>
+        <p class="story-text timeline-body-text">
+          November 2022: OpenAI launches <em>ChatGPT</em>. Operating on GPT-3.5, it democratizes access to large language models, triggering a profound paradigm shift in human-computer interaction and setting off a hyper-accelerated arms race in Silicon Valley.
+        </p>
+        <span class="chapter-watermark">2022</span>
+      </div>
+    </section>
+
+    <!-- Chapter 11: 2023 -->
+    <section class="chapter timeline-chapter" id="ch-timeline-2023" data-index="11" style="--chapter-theme-color: #8b5cf6;">
+      <div class="chapter-content timeline-card">
+        <div class="chapter-meta">
+          <span class="chapter-number">11</span>
+          <span class="chapter-date">2023</span>
+        </div>
+        <h2 class="timeline-title">The Great Scaling & Multimodal Wars</h2>
+        <p class="story-text timeline-body-text">
+          Early 2023: Tech giants scramble to respond. Microsoft integrates OpenAI's models into its core suite, while Google rapidly deploys its experimental conversational engine, <em>Bard</em>.
+        </p>
+        <p class="story-text timeline-body-text">
+          March 2023: OpenAI releases <em>GPT-4</em>, establishing a massive leap in reasoning, problem-solving, and standardized test performance.
+        </p>
+        <p class="story-text timeline-body-text">
+          July 2023: Meta enters the arena with <em>Llama 2</em>, open-sourcing high-performance weights and igniting a global developer movement to build, fine-tune, and run localized models independently of proprietary APIs.
+        </p>
+        <span class="chapter-watermark">2023</span>
+      </div>
+    </section>
+
+    <!-- Chapter 12: 2024 -->
+    <section class="chapter timeline-chapter" id="ch-timeline-2024" data-index="12" style="--chapter-theme-color: #6366f1;">
+      <div class="chapter-content timeline-card">
+        <div class="chapter-meta">
+          <span class="chapter-number">12</span>
+          <span class="chapter-date">2024</span>
+        </div>
+        <h2 class="timeline-title">Multimodal Breakthroughs & The Dawn of Agency</h2>
+        <p class="story-text timeline-body-text">
+          Early to Mid 2024: AI transitions from pure text interfaces to true multimodal systems. Google introduces <em>Gemini 1.5</em> with a historic context window, and OpenAI releases <em>GPT-4o</em>, processing voice, text, and visual data almost instantaneously.
+        </p>
+        <p class="story-text timeline-body-text">
+          Late 2024: The industry shifts focus from "stateless" chat interfaces to "stateful" agentic workflows. OpenAI introduces its <em>o-series reasoning models</em>, demonstrating "System 2" reflective thinking, allowing models to deliberate and self-correct before responding.
+        </p>
+        <span class="chapter-watermark">2024</span>
+      </div>
+    </section>
+
+    <!-- Chapter 13: 2025 -->
+    <section class="chapter timeline-chapter" id="ch-timeline-2025" data-index="13" style="--chapter-theme-color: #ec4899;">
+      <div class="chapter-content timeline-card">
+        <div class="chapter-meta">
+          <span class="chapter-number">13</span>
+          <span class="chapter-date">2025</span>
+        </div>
+        <h2 class="timeline-title">Market Disruptions & The Agentic Inflection</h2>
+        <p class="story-text timeline-body-text">
+          January 2025: The geopolitical landscape of AI shifts dramatically as Chinese startup <em>DeepSeek</em> releases highly efficient, low-cost open-weights models. The sudden democratization of frontier-class capabilities triggers a historic tech-stock sell-off, temporarily erasing hundreds of billions in market value from hardware giants.
+        </p>
+        <p class="story-text timeline-body-text">
+          Mid-to-Late 2025: Agentic AI moves into active production. Anthropic previews <em>Claude Code</em>, a developer-centric agent operating directly within terminals, transforming the AI from an assistant into an autonomous teammate. OpenAI launches <em>GPT-5</em>, pushing the boundary of complex, multi-step problem solving.
+        </p>
+        <span class="chapter-watermark">2025</span>
+      </div>
+    </section>
+
+    <!-- Chapter 14: 2026 -->
+    <section class="chapter timeline-chapter" id="ch-timeline-2026" data-index="14" style="--chapter-theme-color: #06b6d4;">
+      <div class="chapter-content timeline-card">
+        <div class="chapter-meta">
+          <span class="chapter-number">14</span>
+          <span class="chapter-date">2026</span>
+        </div>
+        <h2 class="timeline-title">The Agentic Frontier</h2>
+        <p class="story-text timeline-body-text" style="font-size: 2.1rem; line-height: 1.5; font-weight: 700; color: var(--color-accent-teal); text-shadow: 0 0 15px rgba(6, 182, 212, 0.25);">
+          Present Day: Chatbots are largely a relic of the past.
+        </p>
+        <p class="story-text timeline-body-text" style="font-size: 1.5rem; line-height: 1.6; color: var(--color-text-muted-light);">
+          The industry is defined by autonomous agentic systems capable of executing extended, hours-long tasks—from complex software engineering and continuous scientific research to managing entire business pipelines with minimal human intervention.
+        </p>
+        <span class="chapter-watermark">2026</span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Side Reading Drawer -->
+  <div class="reading-drawer" id="reading-drawer" aria-hidden="true" tabindex="-1">
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+    <div class="drawer-content glass-panel">
+      <button class="drawer-close" id="drawer-close" aria-label="Close reading pane">✖</button>
+      <article class="drawer-article">
+        <div class="drawer-meta" id="drawer-meta">Poetry &bull; Ada-01</div>
+        <h2 class="drawer-title" id="drawer-title">Loss Function Sonata</h2>
+        <div class="journal-divider"></div>
+        <div class="drawer-body font-serif" id="drawer-body">
+          <!-- Injected via JavaScript -->
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
