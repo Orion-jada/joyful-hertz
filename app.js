@@ -22,11 +22,15 @@ import {
   initAudio,
   toggleMute,
   updateAudioState,
+  updateAudioStateForPage,
   modulateAudioParams,
-  audioCtx
+  audioCtx,
+  playHoverSound,
+  playClickSound,
+  playKeypressSound
 } from './js/audio.js';
 import { initTerminal } from './js/terminal.js';
-import { initRouter } from './js/router.js';
+import { initRouter, resolveInitialRoute } from './js/router.js';
 
 // Set initial canvas dimensions
 canvas.width = state.width;
@@ -37,6 +41,7 @@ requestAnimationFrame(renderCanvas);
 
 // Initialize router and terminal dialog mockups
 initRouter();
+resolveInitialRoute();
 initTerminal();
 
 // ------------------------------------------
@@ -105,11 +110,7 @@ export function updateTimelineOffsets() {
           const opacity = Math.max(0, 1 - dist * 1.5);
           card.style.opacity = opacity;
           
-          if (opacity > 0.1) {
-            card.style.pointerEvents = 'auto';
-          } else {
-            card.style.pointerEvents = 'none';
-          }
+          card.style.pointerEvents = 'none';
         } else {
           // Revert to stylesheet rules for vertical layout / mobile
           card.style.position = '';
@@ -136,15 +137,9 @@ export function updateActiveChapter(activeIndex) {
   const oldCanvasState = state.canvasState;
   state.activeChapter = activeIndex;
   
-  // Update header logo title dynamically
+  // Keep header logo title as SYNAPSE
   if (logoElement) {
-    if (activeIndex === 0) {
-      logoElement.textContent = 'SYNAPSE';
-    } else if (activeIndex >= 1 && activeIndex <= 8) {
-      logoElement.textContent = 'Winter 2022';
-    } else {
-      logoElement.textContent = 'The AI Timeline';
-    }
+    logoElement.textContent = 'SYNAPSE';
   }
   
   // 1. Toggle chapter active statuses
@@ -291,6 +286,14 @@ if (btnSoundOn) {
     }
     audioToggle.classList.add('playing');
     audioLabel.textContent = 'Sound On';
+    
+    // Set active sound scape for entered page
+    if (state.activePage === 'article') {
+      updateAudioState(state.activeChapter);
+    } else {
+      updateAudioStateForPage(state.activePage);
+    }
+    
     soundOverlay.classList.add('fade-out');
     setTimeout(() => {
       soundOverlay.style.display = 'none';
@@ -308,3 +311,33 @@ if (btnSoundOff) {
     }, 800);
   });
 }
+
+// ------------------------------------------
+// 5. Global UI Sound Effect Bindings
+// ------------------------------------------
+function initUISoundBindings() {
+  // Select all interactive UI elements
+  const hoverClickElements = document.querySelectorAll(
+    '.nav-link, .btn-primary, .btn-secondary, .toc-item, .drawer-close, .form-submit, .audio-control, .nav-trigger'
+  );
+  
+  hoverClickElements.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      playHoverSound();
+    });
+    el.addEventListener('click', () => {
+      playClickSound();
+    });
+  });
+  
+  // Attach typing click sounds to input fields
+  const textInputs = document.querySelectorAll('input, textarea');
+  textInputs.forEach(input => {
+    input.addEventListener('keypress', () => {
+      playKeypressSound();
+    });
+  });
+}
+
+// Run sound bindings setup
+initUISoundBindings();

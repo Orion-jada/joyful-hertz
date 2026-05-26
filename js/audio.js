@@ -5,6 +5,7 @@ let masterGain = null;
 let lowpassFilter = null;
 let droneOsc1 = null;
 let droneOsc2 = null;
+let droneGain = null;
 let tensionOsc = null;
 let tensionGain = null;
 let noiseNode = null;
@@ -37,6 +38,10 @@ export function initAudio() {
   droneOsc2.type = 'triangle';
   droneOsc2.frequency.setValueAtTime(65.91, audioCtx.currentTime); // slightly detuned
   
+  droneGain = audioCtx.createGain();
+  const initDroneVolume = (state.activePage === 'article') ? 0.5 : 0;
+  droneGain.gain.setValueAtTime(initDroneVolume, audioCtx.currentTime);
+  
   // Tension Generator (High-pitched metallic ring - A3)
   tensionOsc = audioCtx.createOscillator();
   tensionOsc.type = 'sawtooth';
@@ -48,7 +53,8 @@ export function initAudio() {
   // Ambient Wind Noise
   noiseNode = createNoiseBufferNode();
   noiseGain = audioCtx.createGain();
-  noiseGain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+  const initNoiseVolume = (state.activePage === 'article') ? 0.04 : 0;
+  noiseGain.gain.setValueAtTime(initNoiseVolume, audioCtx.currentTime);
   
   // ChatGPT clean tone chord generators
   cleanOsc1 = audioCtx.createOscillator();
@@ -63,8 +69,9 @@ export function initAudio() {
   cleanGain.gain.setValueAtTime(0, audioCtx.currentTime);
   
   // Connections
-  droneOsc1.connect(lowpassFilter);
-  droneOsc2.connect(lowpassFilter);
+  droneOsc1.connect(droneGain);
+  droneOsc2.connect(droneGain);
+  droneGain.connect(lowpassFilter);
   
   tensionOsc.connect(tensionGain);
   tensionGain.connect(lowpassFilter);
@@ -128,7 +135,11 @@ export function toggleMute() {
     audioToggle.classList.add('playing');
     audioLabel.textContent = "Sound On";
     masterGain.gain.linearRampToValueAtTime(0.4, audioCtx.currentTime + 0.3);
-    updateAudioStateForPage(state.activePage);
+    if (state.activePage === 'article') {
+      updateAudioState(state.activeChapter);
+    } else {
+      updateAudioStateForPage(state.activePage);
+    }
   }
 }
 
@@ -226,6 +237,11 @@ export function updateAudioState(chapterIndex) {
   
   const now = audioCtx.currentTime;
   
+  // Fade in background drones when in the article view
+  if (droneGain) {
+    droneGain.gain.linearRampToValueAtTime(0.5, now + 1.0);
+  }
+  
   if (chapterIndex === 9) {
     playResolutionChord();
     
@@ -254,34 +270,14 @@ export function updateAudioState(chapterIndex) {
 export function updateAudioStateForPage(pageId) {
   if (!state.audioInitialized || state.isMuted) return;
   const now = audioCtx.currentTime;
+  
+  stopArpeggiator();
 
-  if (pageId === 'home') {
-    cleanGain.gain.linearRampToValueAtTime(0.2, now + 1.2);
-    cleanOsc1.frequency.exponentialRampToValueAtTime(130.81, now + 1.2);
-    cleanOsc2.frequency.exponentialRampToValueAtTime(196.00, now + 1.2);
-
-    lowpassFilter.frequency.exponentialRampToValueAtTime(40, now + 1.2);
-    tensionGain.gain.linearRampToValueAtTime(0, now + 0.8);
-    noiseGain.gain.linearRampToValueAtTime(0.015, now + 1.2);
-  } else if (pageId === 'mission') {
-    cleanGain.gain.linearRampToValueAtTime(0.08, now + 1.2);
-    cleanOsc1.frequency.exponentialRampToValueAtTime(110.00, now + 1.2);
-    cleanOsc2.frequency.exponentialRampToValueAtTime(165.00, now + 1.2);
-
-    lowpassFilter.frequency.exponentialRampToValueAtTime(180, now + 1.2);
-    lowpassFilter.Q.setValueAtTime(3.0, now);
-    tensionGain.gain.linearRampToValueAtTime(0.04, now + 1.2);
-    tensionOsc.frequency.setValueAtTime(220, now);
-    noiseGain.gain.linearRampToValueAtTime(0.03, now + 1.2);
-  } else if (pageId === 'team') {
-    cleanGain.gain.linearRampToValueAtTime(0.18, now + 1.2);
-    cleanOsc1.frequency.exponentialRampToValueAtTime(146.83, now + 1.2);
-    cleanOsc2.frequency.exponentialRampToValueAtTime(220.00, now + 1.2);
-
-    lowpassFilter.frequency.exponentialRampToValueAtTime(80, now + 1.2);
-    tensionGain.gain.linearRampToValueAtTime(0, now + 0.8);
-    noiseGain.gain.linearRampToValueAtTime(0.02, now + 1.2);
-  }
+  // Smoothly fade out all continuous drones, ambient noise, and chords on standard pages
+  if (droneGain) droneGain.gain.linearRampToValueAtTime(0, now + 0.8);
+  if (noiseGain) noiseGain.gain.linearRampToValueAtTime(0, now + 0.8);
+  if (cleanGain) cleanGain.gain.linearRampToValueAtTime(0, now + 0.8);
+  if (tensionGain) tensionGain.gain.linearRampToValueAtTime(0, now + 0.8);
 }
 
 export function modulateAudioParams() {
@@ -334,4 +330,118 @@ function playResolutionChord() {
     osc.start(now + delay);
     osc.stop(now + delay + 3.0);
   });
+}
+
+// ------------------------------------------
+// Sound Design UI & Interactive Chimes
+// ------------------------------------------
+
+let lastChimeTime = 0;
+export function playNodeChime() {
+  if (!state.audioInitialized || state.isMuted || !audioCtx) return;
+  const now = audioCtx.currentTime;
+  
+  // Throttle chimes to prevent chaotic noise overlays
+  if (now - lastChimeTime < 0.15) return;
+  lastChimeTime = now;
+  
+  const osc = audioCtx.createOscillator();
+  const gainNode = audioCtx.createGain();
+  
+  osc.type = 'sine';
+  
+  // Select pitch scale based on current active view
+  let pitches = [261.63, 293.66, 329.63, 392.00, 440.00]; // C Major Pentatonic (Home)
+  if (state.activePage === 'mission') {
+    pitches = [220.00, 246.94, 261.63, 329.63, 392.00]; // A Minor Pentatonic (Mission)
+  } else if (state.activePage === 'team') {
+    pitches = [293.66, 349.23, 440.00, 523.25, 587.33]; // D minor Spacey (Board)
+  }
+  
+  const pitch = pitches[Math.floor(Math.random() * pitches.length)];
+  osc.frequency.setValueAtTime(pitch, now);
+  
+  gainNode.gain.setValueAtTime(0, now);
+  gainNode.gain.linearRampToValueAtTime(0.05, now + 0.05); // increased volume chime
+  gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 1.2); // ring out decay
+  
+  osc.connect(gainNode);
+  gainNode.connect(masterGain || audioCtx.destination);
+  
+  osc.start(now);
+  osc.stop(now + 1.3);
+}
+
+export function playHoverSound() {
+  if (!state.audioInitialized || state.isMuted || !audioCtx) return;
+  const now = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const gainNode = audioCtx.createGain();
+  
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(900, now);
+  osc.frequency.exponentialRampToValueAtTime(1400, now + 0.04);
+  
+  gainNode.gain.setValueAtTime(0, now);
+  gainNode.gain.linearRampToValueAtTime(0.022, now + 0.01); // increased volume tick
+  gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
+  
+  osc.connect(gainNode);
+  gainNode.connect(masterGain || audioCtx.destination);
+  osc.start(now);
+  osc.stop(now + 0.06);
+}
+
+export function playClickSound() {
+  if (!state.audioInitialized || state.isMuted || !audioCtx) return;
+  const now = audioCtx.currentTime;
+  
+  // Note 1
+  const osc1 = audioCtx.createOscillator();
+  const gain1 = audioCtx.createGain();
+  osc1.type = 'sine';
+  osc1.frequency.setValueAtTime(783.99, now); // G5
+  gain1.gain.setValueAtTime(0, now);
+  gain1.gain.linearRampToValueAtTime(0.040, now + 0.02); // increased volume chime 1
+  gain1.gain.exponentialRampToValueAtTime(0.0001, now + 0.15);
+  osc1.connect(gain1);
+  gain1.connect(masterGain || audioCtx.destination);
+  osc1.start(now);
+  osc1.stop(now + 0.2);
+  
+  // Note 2 (slightly staggered confirmation chime)
+  setTimeout(() => {
+    if (!audioCtx || state.isMuted) return;
+    const t = audioCtx.currentTime;
+    const osc2 = audioCtx.createOscillator();
+    const gain2 = audioCtx.createGain();
+    osc2.type = 'sine';
+    osc2.frequency.setValueAtTime(1046.50, t); // C6
+    gain2.gain.setValueAtTime(0, t);
+    gain2.gain.linearRampToValueAtTime(0.050, t + 0.02); // increased volume chime 2
+    gain2.gain.exponentialRampToValueAtTime(0.0001, t + 0.22);
+    osc2.connect(gain2);
+    gain2.connect(masterGain || audioCtx.destination);
+    osc2.start(t);
+    osc2.stop(t + 0.25);
+  }, 45);
+}
+
+export function playKeypressSound() {
+  if (!state.audioInitialized || state.isMuted || !audioCtx) return;
+  const now = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const gainNode = audioCtx.createGain();
+  
+  osc.type = 'triangle';
+  osc.frequency.setValueAtTime(1600, now);
+  
+  gainNode.gain.setValueAtTime(0, now);
+  gainNode.gain.linearRampToValueAtTime(0.018, now + 0.005); // increased volume keypress
+  gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 0.025);
+  
+  osc.connect(gainNode);
+  gainNode.connect(masterGain || audioCtx.destination);
+  osc.start(now);
+  osc.stop(now + 0.03);
 }

@@ -90,8 +90,13 @@ const drawerTitle = document.getElementById('drawer-title');
 const drawerMeta = document.getElementById('drawer-meta');
 const drawerBody = document.getElementById('drawer-body');
 
-export function navigateToPage(targetPageId) {
+export function navigateToPage(targetPageId, triggerPush = true) {
   if (state.activePage === targetPageId) return;
+
+  if (triggerPush) {
+    const targetUrl = targetPageId === 'home' ? '/' : `/${targetPageId}`;
+    history.pushState({ pageId: targetPageId }, '', targetUrl);
+  }
 
   const updateDOM = () => {
     // 1. Remove active class from all pages and links
@@ -138,7 +143,10 @@ export function navigateToPage(targetPageId) {
         updateAudioStateForPage('team');
       }
     } else {
-      updateActiveChapter(state.activeChapter);
+      // Force active chapter update to bypass early returns and start audio hum immediately
+      const currentChapter = state.activeChapter;
+      state.activeChapter = -1;
+      updateActiveChapter(currentChapter);
     }
   };
 
@@ -236,6 +244,42 @@ export function initRouter() {
     });
   });
 
+  // Popstate event handler for browser Back/Forward navigation
+  window.addEventListener('popstate', (e) => {
+    if (e.state && e.state.pageId) {
+      navigateToPage(e.state.pageId, false);
+    } else {
+      // Reconstruct page state if history state is empty (e.g. initial landing page)
+      const path = window.location.pathname.replace(/^\/|\/$/g, '');
+      let pageId = 'home';
+      if (path === 'mission') pageId = 'mission';
+      else if (path === 'team') pageId = 'team';
+      else if (path === 'article') pageId = 'article';
+      
+      navigateToPage(pageId, false);
+    }
+  });
+
   // Initial state
   if (dotNav) dotNav.style.display = 'none';
+}
+
+// Resolves and displays the correct route on page load based on current URL path
+export function resolveInitialRoute() {
+  const path = window.location.pathname.replace(/^\/|\/$/g, ''); // strip slashes
+  let targetPageId = 'home';
+  
+  if (path === 'mission') {
+    targetPageId = 'mission';
+  } else if (path === 'team') {
+    targetPageId = 'team';
+  } else if (path === 'article') {
+    targetPageId = 'article';
+  }
+  
+  // Initialize current history page context
+  history.replaceState({ pageId: targetPageId }, '', window.location.pathname);
+  
+  // Render active page view
+  navigateToPage(targetPageId, false);
 }

@@ -1,4 +1,5 @@
 import { state, ctx } from './state.js';
+import { playNodeChime } from './audio.js';
 
 // Array to track electrical pulse signals traversing the neural network
 const activePulses = [];
@@ -31,7 +32,7 @@ class Particle {
   // Fire electrical impulse to connected neighbors
   fire() {
     const now = Date.now();
-    if (this.lastFired && now - this.lastFired < 400) return;
+    if (this.lastFired && now - this.lastFired < 400) return false;
     this.lastFired = now;
     this.glowStrength = 1.0;
     
@@ -58,6 +59,7 @@ class Particle {
         }
       }
     });
+    return true;
   }
   
   update() {
@@ -152,7 +154,10 @@ class Particle {
       
       // Electric activation on proximity
       if (isNeuralNet && dist < 95) {
-        this.fire();
+        const fired = this.fire();
+        if (fired) {
+          playNodeChime();
+        }
       }
       
       if (s === 'winter') {

@@ -1,6 +1,6 @@
 // Global state tracking
 export const state = {
-  activePage: 'home',
+  activePage: '',
   activeChapter: 0,
   scrollPercent: 0,
   isMuted: true,

@@ -642,7 +642,7 @@ body.timeline-active .timeline-thread {
   
   body.timeline-active .timeline-chapter.active .timeline-card {
     opacity: 1;
-    pointer-events: auto;
+    pointer-events: none;
   }
 
   /* Fixed horizontal thread background line */
