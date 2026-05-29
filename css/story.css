@@ -626,7 +626,8 @@ body.timeline-active .timeline-thread {
     top: 50%;
     left: 50%;
     width: 800px;
-    height: 520px;
+    height: 50vh; /* Responsive height */
+    max-height: 500px;
     max-width: 85vw;
     margin: 0 !important;
     display: flex;
@@ -647,7 +648,7 @@ body.timeline-active .timeline-thread {
 
   /* Fixed horizontal thread background line */
   body.timeline-active .timeline-thread {
-    top: calc(50% + 320px); /* Positioned below cards */
+    top: 82vh; /* Responsive thread position */
     left: 0;
     transform: none;
     width: 100vw;
@@ -665,7 +666,7 @@ body.timeline-active .timeline-thread {
     bottom: auto;
     transform: translateX(-50%);
     width: 2px;
-    height: calc(320px - 50%);
+    height: calc(32vh - 50%); /* Dynamic connector height: 82vh thread - 50vh center = 32vh offset */
     background: var(--chapter-theme-color, var(--color-primary));
     opacity: 0.3;
     transition: opacity 0.5s;
@@ -680,7 +681,7 @@ body.timeline-active .timeline-thread {
   body.timeline-active .timeline-chapter .timeline-card::before {
     content: '';
     position: absolute;
-    top: calc(50% + 320px);
+    top: calc(32vh + 50%); /* Dynamic dot position relative to card boundaries */
     left: 50%;
     right: auto;
     bottom: auto;
@@ -701,7 +702,7 @@ body.timeline-active .timeline-thread {
   /* Reposition dot-navigation to bottom horizontal row */
   body.timeline-active .dot-nav {
     right: 50%;
-    top: calc(100% - 5rem);
+    top: 90vh; /* Position safely below thread line */
     transform: translate(50%, 0);
     flex-direction: row;
     gap: 1.5rem;
@@ -1126,9 +1127,87 @@ body.timeline-active .timeline-thread {
 @media (min-width: 1000px) {
   body.timeline-active .agentic-workspace-card {
     width: 980px;
-    height: 560px;
+    height: 60vh; /* Responsive height */
+    max-height: 560px;
     max-width: 90vw;
-    max-height: 80vh;
+  }
+}
+
+/* Responsive adjustments for shorter viewports to prevent content clipping */
+@media (min-width: 1000px) and (max-height: 780px) {
+  body.timeline-active .timeline-card {
+    padding: 1.5rem 2.5rem !important;
+  }
+  body.timeline-active .timeline-title {
+    font-size: 1.75rem !important;
+    margin-bottom: 0.8rem !important;
+  }
+  body.timeline-active .timeline-body-text {
+    font-size: 1.05rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 0.8rem !important;
+  }
+  body.timeline-active .chapter-meta {
+    margin-bottom: 0.8rem !important;
+  }
+  body.timeline-active .dot-nav {
+    top: 90vh !important;
+    gap: 1.2rem !important;
+  }
+  body.timeline-active .nav-dot {
+    width: 7px !important;
+    height: 7px !important;
+  }
+  
+  /* Agent workspace adjustments for short viewports */
+  body.timeline-active .agent-workspace {
+    height: calc(100% - 3.5rem) !important;
+    gap: 0.8rem !important;
+  }
+  body.timeline-active .agent-sidebar {
+    width: 180px !important;
+    padding: 0.6rem !important;
+  }
+  body.timeline-active .sidebar-section-title {
+    font-size: 0.6rem !important;
+    margin-bottom: 0.2rem !important;
+  }
+  body.timeline-active .agent-task-btn {
+    padding: 0.4rem 0.5rem !important;
+    font-size: 0.7rem !important;
+  }
+  body.timeline-active .file-item {
+    font-size: 0.7rem !important;
+    padding: 0.2rem 0.3rem !important;
+  }
+  body.timeline-active .console-header {
+    padding: 0.3rem 0.6rem !important;
+    font-size: 0.7rem !important;
+  }
+  body.timeline-active .thought-log-container, 
+  body.timeline-active .terminal-log-container {
+    gap: 0.2rem !important;
+  }
+  body.timeline-active .pane-title {
+    font-size: 0.6rem !important;
+    padding: 0.2rem 0.5rem !important;
+  }
+  body.timeline-active .thought-log, 
+  body.timeline-active .terminal-log {
+    padding: 0.4rem 0.5rem !important;
+    font-size: 0.7rem !important;
+    line-height: 1.35 !important;
+  }
+  body.timeline-active .approval-banner {
+    padding: 0.4rem 0.8rem !important;
+  }
+  body.timeline-active .approval-text {
+    font-size: 0.7rem !important;
+  }
+  body.timeline-active .btn-approve, 
+  body.timeline-active .btn-reset {
+    padding: 0.3rem 0.6rem !important;
+    font-size: 0.7rem !important;
   }
 }
 
