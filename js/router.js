@@ -200,6 +200,21 @@ export function navigateToPage(targetPageId, triggerPush = true) {
 
     state.activePage = targetPageId;
 
+    // Update Browser Document Title
+    if (targetPageId === 'home') {
+      document.title = "Home | SYNAPSE";
+    } else if (targetPageId === 'manifesto') {
+      document.title = "Manifesto | SYNAPSE";
+    } else if (targetPageId === 'agents') {
+      document.title = "Agents | SYNAPSE";
+    } else if (targetPageId === 'curated') {
+      document.title = "Curated | SYNAPSE";
+    } else if (targetPageId === 'featured') {
+      document.title = "Featured Issue | SYNAPSE";
+    } else if (targetPageId === 'article') {
+      document.title = "An Accelerated History of AI | SYNAPSE";
+    }
+
     // 2. Adjust visibility of the scroll indicators and dot nav
     const isArticle = (targetPageId === 'article');
     dotNav.style.display = isArticle && window.innerWidth > 900 ? 'flex' : 'none';
@@ -256,11 +271,31 @@ function openDrawer(articleId) {
   readingDrawer.classList.add('open');
   readingDrawer.setAttribute('aria-hidden', 'false');
   readingDrawer.focus();
+
+  // Update browser tab title to show active piece name
+  document.title = `${data.title} | SYNAPSE`;
 }
 
 function closeDrawer() {
   readingDrawer.classList.remove('open');
   readingDrawer.setAttribute('aria-hidden', 'true');
+
+  // Revert back to the active page title
+  if (state.activePage === 'featured') {
+    document.title = "Featured Issue | SYNAPSE";
+  } else if (state.activePage === 'home') {
+    document.title = "Home | SYNAPSE";
+  } else if (state.activePage === 'manifesto') {
+    document.title = "Manifesto | SYNAPSE";
+  } else if (state.activePage === 'agents') {
+    document.title = "Agents | SYNAPSE";
+  } else if (state.activePage === 'curated') {
+    document.title = "Curated | SYNAPSE";
+  } else if (state.activePage === 'article') {
+    document.title = "An Accelerated History of AI | SYNAPSE";
+  } else {
+    document.title = "SYNAPSE";
+  }
 }
 
 export function initRouter() {

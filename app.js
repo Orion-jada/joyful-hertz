@@ -218,6 +218,19 @@ export function updateActiveChapter(activeIndex) {
   
   // 6. Update Audio States
   updateAudioState(activeIndex);
+
+  // 7. Update Document Title dynamically for article timeline chapters
+  if (state.activePage === 'article') {
+    const chapterEl = chapters[activeIndex];
+    if (chapterEl) {
+      const headerEl = chapterEl.querySelector('.timeline-title, h1');
+      if (headerEl) {
+        document.title = `${headerEl.textContent.trim()} | An Accelerated History of AI | SYNAPSE`;
+      } else {
+        document.title = `Chapter ${activeIndex} | An Accelerated History of AI | SYNAPSE`;
+      }
+    }
+  }
 }
 
 // ------------------------------------------
