@@ -112,8 +112,7 @@ export function updateTimelineOffsets() {
           const opacity = Math.max(0, 1 - dist * 1.5);
           card.style.opacity = opacity;
           
-          // Enable pointer interactions only for the active, fully visible card
-          card.style.pointerEvents = opacity > 0.8 ? 'auto' : 'none';
+          card.style.pointerEvents = 'none';
         } else {
           // Revert to stylesheet rules for vertical layout / mobile
           card.style.position = '';
