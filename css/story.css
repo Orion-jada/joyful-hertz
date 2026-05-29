@@ -663,12 +663,12 @@ body.timeline-active .timeline-thread {
     left: 50%;
     right: auto;
     bottom: auto;
-    transform: translateX(-50%);
+    transform: translateX(-50%) scaleX(calc(1 / var(--scale-factor, 1)));
     width: 2px;
-    height: calc(320px - 50%);
+    height: calc(var(--dot-offset, 320px) - 50%);
     background: var(--chapter-theme-color, var(--color-primary));
     opacity: 0.3;
-    transition: opacity 0.5s;
+    transition: opacity 0.5s, transform 0.5s;
     z-index: -1;
   }
   
@@ -680,11 +680,11 @@ body.timeline-active .timeline-thread {
   body.timeline-active .timeline-chapter .timeline-card::before {
     content: '';
     position: absolute;
-    top: calc(50% + 320px);
+    top: calc(50% + var(--dot-offset, 320px));
     left: 50%;
     right: auto;
     bottom: auto;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(calc(1 / var(--scale-factor, 1)));
     width: 12px;
     height: 12px;
     border-radius: 50%;
@@ -695,7 +695,7 @@ body.timeline-active .timeline-thread {
   }
   
   body.timeline-active .timeline-chapter.active .timeline-card::before {
-    transform: translate(-50%, -50%) scale(1.4);
+    transform: translate(-50%, -50%) scale(calc(1.4 / var(--scale-factor, 1)));
   }
 
   /* Reposition dot-navigation to bottom horizontal row */

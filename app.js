@@ -99,20 +99,42 @@ export function updateTimelineOffsets() {
           const diff = index - currentScrollChapter;
           const offsetVw = diff * 85;
           
+          const windowWidth = window.innerWidth;
+          const windowHeight = window.innerHeight;
+          
+          // Leave comfortable margins for the header and dots navigation
+          const maxCardWidth = windowWidth - 100;
+          const maxCardHeight = windowHeight - 200;
+          
+          // Determine reference size for scaling
+          const isAgentic = card.classList.contains('agentic-workspace-card');
+          const refWidth = isAgentic ? 980 : 800;
+          const refHeight = isAgentic ? 560 : 520;
+          
+          // Calculate scale factor to fit within max bounds
+          const scaleX = maxCardWidth / refWidth;
+          const scaleY = maxCardHeight / refHeight;
+          const scale = Math.max(0.4, Math.min(scaleX, scaleY, 1.4));
+          
           card.style.position = 'fixed';
           card.style.top = '50%';
           card.style.left = '50%';
-          // Perfect translateX horizontal sliding alignment
-          card.style.transform = `translate(-50%, -50%) translateX(${offsetVw}vw)`;
+          // Perfect translateX horizontal sliding alignment + dynamic scaling
+          card.style.transform = `translate(-50%, -50%) translateX(${offsetVw}vw) scale(${scale})`;
           card.style.margin = '0';
           card.style.zIndex = '10';
+          
+          // Set custom properties for CSS adjustments (dots alignment, line width)
+          card.style.setProperty('--scale-factor', scale);
+          card.style.setProperty('--dot-offset', `${320 / scale}px`);
           
           // Calculate continuous opacity fading to prevent overlaps
           const dist = Math.abs(diff);
           const opacity = Math.max(0, 1 - dist * 1.5);
           card.style.opacity = opacity;
           
-          card.style.pointerEvents = 'none';
+          // Enable pointer interactions only for the active, fully visible card
+          card.style.pointerEvents = opacity > 0.8 ? 'auto' : 'none';
         } else {
           // Revert to stylesheet rules for vertical layout / mobile
           card.style.position = '';
@@ -123,6 +145,8 @@ export function updateTimelineOffsets() {
           card.style.zIndex = '';
           card.style.opacity = '';
           card.style.pointerEvents = '';
+          card.style.removeProperty('--scale-factor');
+          card.style.removeProperty('--dot-offset');
         }
       }
     }
