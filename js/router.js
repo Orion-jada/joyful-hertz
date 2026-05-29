@@ -362,15 +362,23 @@ export function initRouter() {
           
           if (quizResult && quizResultText) {
             const pct = Math.round(((quizScore - 3) / 12) * 100);
-            let message = '';
+            quizResultText.textContent = ''; // clear previous content
+
+            const titleEl = document.createElement('strong');
+            let description = '';
             if (pct <= 30) {
-              message = `<strong>Organic Consciousness:</strong> Your thoughts remain firmly grounded in biological intuition and creative friction. Your alignment is strongly human (${100 - pct}% human, ${pct}% machine).`;
+              titleEl.textContent = 'Organic Consciousness:';
+              description = ` Your thoughts remain firmly grounded in biological intuition and creative friction. Your alignment is strongly human (${100 - pct}% human, ${pct}% machine).`;
             } else if (pct >= 70) {
-              message = `<strong>Pre-computed Cognition:</strong> Your responses exhibit high similarity to predictive model weights. Your alignment is strongly machine-aligned (${pct}% machine, ${100 - pct}% human).`;
+              titleEl.textContent = 'Pre-computed Cognition:';
+              description = ` Your responses exhibit high similarity to predictive model weights. Your alignment is strongly machine-aligned (${pct}% machine, ${100 - pct}% human).`;
             } else {
-              message = `<strong>Hybrid Cognitive Node:</strong> You balance the spontaneous emotional spark of humanity with the structured geometry of latent spaces (${100 - pct}% human, ${pct}% machine).`;
+              titleEl.textContent = 'Hybrid Cognitive Node:';
+              description = ` You balance the spontaneous emotional spark of humanity with the structured geometry of latent spaces (${100 - pct}% human, ${pct}% machine).`;
             }
-            quizResultText.innerHTML = message;
+            
+            quizResultText.appendChild(titleEl);
+            quizResultText.appendChild(document.createTextNode(description));
             quizResult.style.display = 'block';
           }
         }
