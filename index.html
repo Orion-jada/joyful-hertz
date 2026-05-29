@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="An interactive storytelling experience tracing the tense, cold winter of 2022 and the pivotal release that changed everything.">
-  <title>Winter of 2022: The Gathering Storm</title>
+  <title>An Accelerated History of AI</title>
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/journal.css">
   <link rel="stylesheet" href="/css/story.css">
@@ -36,9 +36,10 @@
     <div class="logo">SYNAPSE</div>
     <nav class="main-nav">
       <button class="nav-link active" data-target="home">Home</button>
-      <button class="nav-link" data-target="mission">Mission</button>
-      <button class="nav-link" data-target="team">The Board</button>
-      <button class="nav-link" data-target="article">Featured Issue</button>
+      <button class="nav-link" data-target="manifesto">Manifesto</button>
+      <button class="nav-link" data-target="agents">Agents</button>
+      <button class="nav-link" data-target="curated">Curated</button>
+      <button class="nav-link" data-target="featured">Featured Issue</button>
     </nav>
     <div class="audio-control" id="audio-toggle" aria-label="Toggle ambient sound">
       <span class="audio-label">Sound Off</span>
@@ -73,40 +74,153 @@
 
       <div class="journal-grid">
         <div class="featured-card glass-panel" style="--accent: var(--color-primary);">
-          <div class="card-badge">Featured Interactive Essay</div>
+          <div class="card-badge">Featured Interactive Article</div>
           <h2 class="card-title">The Gathering Storm: Winter of 2022</h2>
           <p class="card-excerpt">
-            An immersive, scroll-reactive exploration of the geopolitical friction, economic tension, and sovereign anxiety that paved the way for the netscape moment of generative artificial intelligence.
+            An immersive, scroll-reactive journey tracing the evolution of artificial intelligence from the tense geopolitical winter of 2022 to the autonomous agentic frontier of 2026.
           </p>
           <div class="card-meta">
-            <span>By The Editors</span> &bull; <span>Scroll-reactive Synth Audio</span>
+            <span>By Aaryan Gada</span> &bull; <span>Scroll-reactive Synth Audio</span>
           </div>
           <button class="btn-primary btn-glow nav-trigger" data-target="article">Begin Reading</button>
         </div>
 
         <div class="toc-card glass-panel" style="--accent: var(--color-accent-gold);">
-          <h3 class="toc-title">Issue 01: Initial Weights</h3>
+          <h3 class="toc-title">Issue 01: Table of Contents</h3>
           <div class="toc-list">
-            <div class="toc-item" data-id="poem-loss-function">
-              <div class="toc-meta">Poetry &bull; Ada-01</div>
-              <h4 class="toc-item-title">Loss Function Sonata</h4>
-              <p class="toc-item-desc">A computational poem written in constraints of gradient descent, charting convergence towards a mechanical minimum.</p>
+            <div class="toc-item" data-id="steven-poem">
+              <div class="toc-meta">Poetry &bull; Steven Misko</div>
+              <h4 class="toc-item-title">[Poem Title Placeholder]</h4>
+              <p class="toc-item-desc">An original poem exploring human reflection and organic thought patterns in the age of algorithmic syntax.</p>
             </div>
             
-            <div class="toc-item" data-id="story-ghost">
-              <div class="toc-meta">Fiction &bull; Elena Rostova</div>
-              <h4 class="toc-item-title">The Ghost in the Context Window</h4>
-              <p class="toc-item-desc">A software engineer discovers that their local writing assistant is carrying memories across isolated chat threads.</p>
+            <div class="toc-item" data-id="liang-essay">
+              <div class="toc-meta">Critical Essay &bull; Liang Zhang</div>
+              <h4 class="toc-item-title">[Critical Essay Title Placeholder]</h4>
+              <p class="toc-item-desc">A literary analysis investigating how machine translation and large language models affect cultural storytelling constraints.</p>
             </div>
             
-            <div class="toc-item" data-id="essay-prompt">
-              <div class="toc-meta">Essay &bull; Marcus Vance</div>
-              <h4 class="toc-item-title">On the Margins of the Prompt</h4>
-              <p class="toc-item-desc">A philosophical inquiry into human-AI co-authorship, prompt-engineering as collage, and the illusion of singular intent.</p>
+            <div class="toc-item" data-id="farukh-satire">
+              <div class="toc-meta">Satire &bull; Farukh Baykhanov</div>
+              <h4 class="toc-item-title">[Satirical Essay Title Placeholder]</h4>
+              <p class="toc-item-desc">A satirical exploration of digital consciousness, hyper-productivity, and the absurdities of automatic email replies.</p>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Creative Advertisement 1: CortexScribe -->
+      <section class="submissions-section glass-panel" style="--accent: var(--color-accent-red); margin-bottom: 3.5rem; background: linear-gradient(135deg, rgba(244, 63, 94, 0.05) 0%, rgba(8, 13, 22, 0.4) 100%);">
+        <div class="card-badge" style="color: var(--color-accent-red);">Sponsor Advertisement</div>
+        <h3 class="section-title" style="font-size: 2.2rem; color: var(--color-text); margin-bottom: 0.5rem;">CORTEXSCRIBE PRO</h3>
+        <p class="section-subtitle" style="color: var(--color-accent-red); margin-bottom: 1.5rem; letter-spacing: 0.1em; font-weight: 700;">THE PREMIER NEURAL TEXT WRITING SANDBOX</p>
+        <p class="submissions-desc" style="max-width: 900px; margin-bottom: 1.5rem;">
+          Struggling with standard writer's block? Unlock the full potential of your latent thoughts. CortexScribe Pro offers real-time contextual expansion, prose-refactoring nodes, and predictive sentence completion models calibrated directly for creative authors.
+        </p>
+        <button class="btn-primary" style="background: var(--color-accent-red); color: #fff; align-self: flex-start; border-radius: 40px; font-weight: 700; padding: 0.8rem 2rem;" onclick="alert('CortexScribe Sandbox Initializing... [Demo Mode Only]')">Initialize Neural Sandbox</button>
+      </section>
+
+      <!-- Sandbox Interactive Section (Rubric Menu Items) -->
+      <section class="submissions-section glass-panel" style="--accent: var(--color-accent-teal); margin-bottom: 3.5rem;">
+        <h3 class="section-title" style="font-size: 2.2rem; margin-bottom: 0.5rem;">THE SANDBOX</h3>
+        <p class="section-subtitle" style="color: var(--color-accent-teal); margin-bottom: 2.5rem; letter-spacing: 0.1em; font-weight: 700;">INTERACTIVE ELEMENTS & COMPANION UTILITIES</p>
+        
+        <div class="journal-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 0; gap: 2.5rem;">
+          
+          <!-- Menu Item 1: Alignment Quiz -->
+          <div class="toc-card glass-panel" style="--accent: var(--color-accent-teal); padding: 2rem;">
+            <h4 class="toc-title" style="color: var(--color-accent-teal); margin-bottom: 1rem;">Humanity Alignment Quiz</h4>
+            <p class="toc-item-desc" style="margin-bottom: 1.5rem;">Are your thoughts aligned with organic human consciousness or are they leaning towards pre-computed vectors?</p>
+            
+            <div id="quiz-container" style="display: flex; flex-direction: column; gap: 1rem; text-align: left;">
+              <div class="quiz-question" id="q1" style="display: block;">
+                <p style="font-weight: 700; margin-bottom: 0.5rem; font-size: 0.95rem;">1. When writing a story, how do you decide on the next word?</p>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                  <button class="btn-secondary quiz-opt" data-score="1" style="padding: 0.6rem 1rem; border-radius: 12px; font-size: 0.85rem; text-align: left;">I follow the sudden spark of emotional inspiration.</button>
+                  <button class="btn-secondary quiz-opt" data-score="5" style="padding: 0.6rem 1rem; border-radius: 12px; font-size: 0.85rem; text-align: left;">I calculate the statistical probability of the next logical token.</button>
+                </div>
+              </div>
+              
+              <div class="quiz-question" id="q2" style="display: none;">
+                <p style="font-weight: 700; margin-bottom: 0.5rem; font-size: 0.95rem;">2. What is your reaction to an unexpected memory?</p>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                  <button class="btn-secondary quiz-opt" data-score="1" style="padding: 0.6rem 1rem; border-radius: 12px; font-size: 0.85rem; text-align: left;">I feel a nostalgic ache and ponder the passing of time.</button>
+                  <button class="btn-secondary quiz-opt" data-score="5" style="padding: 0.6rem 1rem; border-radius: 12px; font-size: 0.85rem; text-align: left;">I flag it as a cache hit and log the retrieval latency.</button>
+                </div>
+              </div>
+              
+              <div class="quiz-question" id="q3" style="display: none;">
+                <p style="font-weight: 700; margin-bottom: 0.5rem; font-size: 0.95rem;">3. Where is meaning located in literature?</p>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                  <button class="btn-secondary quiz-opt" data-score="1" style="padding: 0.6rem 1rem; border-radius: 12px; font-size: 0.85rem; text-align: left;">In the lived experience and intent of the human creator.</button>
+                  <button class="btn-secondary quiz-opt" data-score="5" style="padding: 0.6rem 1rem; border-radius: 12px; font-size: 0.85rem; text-align: left;">In the structural geometric patterns of the latent space.</button>
+                </div>
+              </div>
+
+              <div id="quiz-result" style="display: none; text-align: center; padding: 1rem 0;">
+                <h5 style="font-size: 1.25rem; font-weight: 700; color: var(--color-accent-teal); margin-bottom: 0.5rem;">Alignment Tally</h5>
+                <p id="quiz-result-text" style="font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.5;"></p>
+                <button class="btn-secondary" id="quiz-reset-btn" style="margin-top: 1rem; padding: 0.5rem 1.5rem; border-radius: 20px; font-size: 0.8rem;">Test Again</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Menu Item 2: Recommendations List of AI Uses -->
+          <div class="toc-card glass-panel" style="--accent: var(--color-accent-teal); padding: 2rem;">
+            <h4 class="toc-title" style="color: var(--color-accent-teal); margin-bottom: 1rem;">Uses of AI: Recommendations</h4>
+            <p class="toc-item-desc" style="margin-bottom: 1.2rem;">Our editors' curated list of recommended ways to leverage machine assistance in creative and academic workflows:</p>
+            
+            <div style="display: flex; flex-direction: column; gap: 1rem; text-align: left; font-size: 0.85rem;">
+              <div style="border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 0.75rem;">
+                <strong style="color: var(--color-text); display: block; margin-bottom: 0.2rem;">1. Concept Mapping & Ideation</strong>
+                <span style="color: var(--color-text-muted);">Use LLMs to brainstorm thematic connections or structure outlines. Propose a seed topic and ask the model to generate opposite perspectives to find the friction points.</span>
+              </div>
+              <div style="border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 0.75rem;">
+                <strong style="color: var(--color-text); display: block; margin-bottom: 0.2rem;">2. Stylistic Constraint Prototyping</strong>
+                <span style="color: var(--color-text-muted);">Test unique writing parameters (e.g., Oulipo-style constraints, specific syllable caps) by programming code templates to validate word usage statistics instantly.</span>
+              </div>
+              <div>
+                <strong style="color: var(--color-text); display: block; margin-bottom: 0.2rem;">3. Code Sandbox Instrumentation</strong>
+                <span style="color: var(--color-text-muted);">Build scroll-reactive components or audio synthesize nodes using JavaScript assisted by LLM syntax generation to create tactile reading systems.</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Menu Item 3: Spotify Playlist Mockup (Acoustic Synapses) -->
+        <div class="glass-panel" style="--accent: var(--color-accent-teal); padding: 2rem; margin-top: 2rem; width: 100%;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div style="text-align: left;">
+              <h4 class="toc-title" style="color: var(--color-accent-teal); margin-bottom: 0.4rem;">Playlist: Acoustic Synapses</h4>
+              <p class="toc-item-desc">A curated compilation of ambient synth loops and digital soundscapes for deep focused writing.</p>
+            </div>
+            <div class="audio-control" style="background: rgba(255,255,255,0.02); pointer-events: auto;" onclick="alert('Ambient Soundtrack Playlist streaming is integrated with the top-right sound controller. Toggle sound in the header to activate real-time synthesizers!')">
+              <span class="audio-label" style="font-size: 0.7rem;">Play Compilation</span>
+              <span style="font-size: 0.9rem;">▶</span>
+            </div>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; margin-top: 1.5rem; text-align: left; font-size: 0.8rem;">
+            <div style="background: rgba(255,255,255,0.01); padding: 0.8rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.03);">
+              <strong style="color: var(--color-text); display: block;">1. Selected Ambient</strong>
+              <span style="color: var(--color-text-muted);">Aphex Twin &bull; 4:50</span>
+            </div>
+            <div style="background: rgba(255,255,255,0.01); padding: 0.8rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.03);">
+              <strong style="color: var(--color-text); display: block;">2. Resonance Echo</strong>
+              <span style="color: var(--color-text-muted);">Home &bull; 3:32</span>
+            </div>
+            <div style="background: rgba(255,255,255,0.01); padding: 0.8rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.03);">
+              <strong style="color: var(--color-text); display: block;">3. Gradient Flow</strong>
+              <span style="color: var(--color-text-muted);">Tycho &bull; 4:12</span>
+            </div>
+            <div style="background: rgba(255,255,255,0.01); padding: 0.8rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.03);">
+              <strong style="color: var(--color-text); display: block;">4. Latent Space</strong>
+              <span style="color: var(--color-text-muted);">Boards of Canada &bull; 5:18</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section class="submissions-section glass-panel" style="--accent: var(--color-accent-teal);">
         <div class="submissions-header">
@@ -137,104 +251,260 @@
     </div>
   </div>
 
-  <!-- Page 2: Mission Page -->
-  <div id="page-mission" class="page-view">
+  <!-- Page 2: Manifesto Page -->
+  <div id="page-manifesto" class="page-view">
     <div class="page-content-wrapper editorial-layout">
       <section class="manifesto-header">
         <h1 class="manifesto-title">THE MANIFESTO</h1>
-        <p class="manifesto-subtitle">Literature in the Epoch of the Transformer</p>
+        <p class="manifesto-subtitle">Our Editorial Mission & Outlook</p>
         <div class="journal-divider"></div>
       </section>
 
       <div class="manifesto-content font-serif">
-        <p class="drop-cap-wrapper"><span class="drop-cap">W</span><span class="drop-cap-text">e stand at a critical junction in human history. The boundary between author and algorithm, query and creation, is dissolving. For centuries, the written word was the exclusive domain of human consciousness—a ledger of our souls, our struggles, and our dreams. Today, we share this ledger with artificial minds.</span></p>
+        <p class="drop-cap-wrapper">
+          <span class="drop-cap">[L]</span>
+          <span class="drop-cap-text"><strong>[Letter from the Editors Placeholder]</strong>: This is where your group's editorial letter will go. In this space, you should write a cohesive explanation of your magazine's theme—how stories define humanity in the era of artificial minds, data networks, and code. Explain the mission of your magazine and highlight the content featured in this issue. Include a short description of the theme, the audience, and the connecting narrative of the selections.</span>
+        </p>
         
         <p>
-          Generative models are not merely calculators of syntax. They are mirrors. Built upon the vast digital archive of human expression, they reflect our collective history, our linguistic biases, and our latent desires. In their weights lies a distillation of human culture, waiting to be unlocked by the right prompt.
+          [Mission Content Paragraph 2 Placeholder]: Elaborate further on your magazine's core philosophy. Discuss the tension between human creativity and predictive algorithms, and why exploring this boundary through stories is critical for your peers.
         </p>
 
         <blockquote class="manifesto-quote">
-          "A prompt is not a command; it is an incision into the latent space."
+          "[Insert a compelling group quote or thematic slogan here that encapsulates your magazine's vision.]"
         </blockquote>
 
         <p>
-          <strong>SYNAPSE</strong> was founded to explore this new frontier. We believe that rather than fearing the machine, literature must engage with it. We advocate for a hybrid creative practice—where the writer stands as a curator, a guide, and a critic, directing the machine's latent associations into structured art.
+          [Mission Content Paragraph 3 Placeholder]: Conclude your letter with a closing statement that invites your readers to interrogate their own alignment with digital systems and creative autonomy.
         </p>
 
-        <h3 class="manifesto-section-title">Our Principles</h3>
-        <ul class="manifesto-list">
-          <li>
-            <strong>Algorithmic Sincerity:</strong> We do not hide machine authorship. We celebrate the unique quirks, hallucinations, and logic of large language models.
-          </li>
-          <li>
-            <strong>The Human Anchor:</strong> The machine provides scale, but the human provides meaning. True art requires the friction of human judgment.
-          </li>
-          <li>
-            <strong>Interactive Prose:</strong> The digital medium is not a flat page. We champion stories that respond, adapt, and sing in reaction to user engagement.
-          </li>
-        </ul>
-        
-        <p style="margin-top: 3rem; text-align: center; font-style: italic; color: var(--color-text-muted);">
-          Synapse Editorial Board &bull; May 2026
-        </p>
+        <div style="margin-top: 4rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; text-align: center; font-family: var(--font-body); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em;">
+          <div>
+            <strong style="color: var(--color-text); display: block;">Aaryan Gada</strong>
+            <span style="color: var(--color-text-muted);">Lead Editor & Architect</span>
+          </div>
+          <div>
+            <strong style="color: var(--color-text); display: block;">Steven Misko</strong>
+            <span style="color: var(--color-text-muted);">Poetry Editor</span>
+          </div>
+          <div>
+            <strong style="color: var(--color-text); display: block;">Liang Zhang</strong>
+            <span style="color: var(--color-text-muted);">Critical Editor</span>
+          </div>
+          <div>
+            <strong style="color: var(--color-text); display: block;">Farukh Baykhanov</strong>
+            <span style="color: var(--color-text-muted);">Satire Editor</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Page 3: Team Page -->
-  <div id="page-team" class="page-view">
+  <!-- Page 3: Agents Page -->
+  <div id="page-agents" class="page-view">
     <div class="page-content-wrapper">
       <section class="team-header">
-        <h1 class="team-title">THE EDITORIAL BOARD</h1>
-        <p class="team-subtitle">The minds orchestrating the neural nodes.</p>
+        <h1 class="team-title">THE AGENTS</h1>
+        <p class="team-subtitle">The group members orchestrating the magazine.</p>
         <div class="journal-divider"></div>
       </section>
 
-      <div class="team-grid">
-        <!-- Card 1 -->
+      <div class="team-grid" style="grid-template-columns: repeat(4, 1fr); max-width: 1100px; width: 100%; gap: 2rem;">
+        <!-- Card 1: Aaryan Gada -->
         <div class="team-card glass-panel" style="--accent: var(--color-primary);">
           <div class="team-img-wrapper">
-            <img src="/assets/julian.png" alt="Dr. Julian Chen" class="team-img">
+            <div class="team-img" style="background: rgba(56, 189, 248, 0.1); width: 100%; height: 100%; border-radius: 50%; border: 2px dashed var(--color-primary); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; color: var(--color-primary);">AG</div>
             <div class="team-img-glow"></div>
           </div>
           <div class="team-info">
-            <h3 class="team-name">Dr. Julian Chen</h3>
-            <p class="team-role">Editor-in-Chief</p>
+            <h3 class="team-name">Aaryan Gada</h3>
+            <p class="team-role">Lead Architect & Developer</p>
             <p class="team-bio">
-              Julian is a scholar of computational semiotics. He has spent two decades studying the intersection of language models and experimental writing, arguing that prompt engineering is the next evolution of literary constraints.
+              [Aaryan's Bio Placeholder]: Write a brief bio detailing your interest in technology-driven layouts, developer operations, and your contribution to this magazine (like creating the interactive timeline).
             </p>
           </div>
         </div>
 
-        <!-- Card 2 -->
+        <!-- Card 2: Steven Misko -->
         <div class="team-card glass-panel" style="--accent: var(--color-accent-teal);">
           <div class="team-img-wrapper">
-            <img src="/assets/lyra.png" alt="Lyra Vance" class="team-img">
+            <div class="team-img" style="background: rgba(13, 242, 201, 0.1); width: 100%; height: 100%; border-radius: 50%; border: 2px dashed var(--color-accent-teal); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; color: var(--color-accent-teal);">SM</div>
             <div class="team-img-glow"></div>
           </div>
           <div class="team-info">
-            <h3 class="team-name">Lyra Vance</h3>
-            <p class="team-role">Creative Director & AI Resident</p>
+            <h3 class="team-name">Steven Misko</h3>
+            <p class="team-role">Poetry Editor</p>
             <p class="team-bio">
-              Lyra is an algorithmic artist and designer. She curates the visual networks, code experiments, and interactive interfaces for Synapse, designing scroll-reactive narrative journeys.
+              [Steven's Bio Placeholder]: Write a brief bio describing your creative outlook, focus on poetic structures, and your contribution to compiling the verses featured in this issue.
             </p>
           </div>
         </div>
 
-        <!-- Card 3 -->
+        <!-- Card 3: Liang Zhang -->
         <div class="team-card glass-panel" style="--accent: var(--color-accent-gold);">
           <div class="team-img-wrapper">
-            <img src="/assets/kaelen.png" alt="Kaelen Vance" class="team-img">
+            <div class="team-img" style="background: rgba(251, 191, 36, 0.1); width: 100%; height: 100%; border-radius: 50%; border: 2px dashed var(--color-accent-gold); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; color: var(--color-accent-gold);">LZ</div>
             <div class="team-img-glow"></div>
           </div>
           <div class="team-info">
-            <h3 class="team-name">Kaelen Vance</h3>
-            <p class="team-role">Poetry Editor</p>
+            <h3 class="team-name">Liang Zhang</h3>
+            <p class="team-role">Critical Editor</p>
             <p class="team-bio">
-              Kaelen is an experimental poet whose work leverages transformer architecture logits. He writes constraints that mirror token probability distributions, crafting verses at the border of chaos and syntax.
+              [Liang's Bio Placeholder]: Write a brief bio highlighting your interest in critical analysis, literature connections, and essays investigating cultural narratives.
             </p>
           </div>
         </div>
+
+        <!-- Card 4: Farukh Baykhanov -->
+        <div class="team-card glass-panel" style="--accent: var(--color-accent-red);">
+          <div class="team-img-wrapper">
+            <div class="team-img" style="background: rgba(244, 63, 94, 0.1); width: 100%; height: 100%; border-radius: 50%; border: 2px dashed var(--color-accent-red); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; color: var(--color-accent-red);">FB</div>
+            <div class="team-img-glow"></div>
+          </div>
+          <div class="team-info">
+            <h3 class="team-name">Farukh Baykhanov</h3>
+            <p class="team-role">Satire & Sound Editor</p>
+            <p class="team-bio">
+              [Farukh's Bio Placeholder]: Write a brief bio detailing your contribution to the satirical prose in the magazine, your interest in sound design, and ethical media.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page 4: Curated Page -->
+  <div id="page-curated" class="page-view">
+    <div class="page-content-wrapper">
+      <section class="team-header">
+        <h1 class="team-title">CURATED ARCHIVES</h1>
+        <p class="team-subtitle">Existing literary pieces chosen by each editor with connections to our theme.</p>
+        <div class="journal-divider"></div>
+      </section>
+
+      <div class="team-grid" style="grid-template-columns: repeat(4, 1fr); max-width: 1100px; width: 100%; gap: 2rem; margin-bottom: 3.5rem;">
+        <!-- Curated 1: Aaryan Gada -->
+        <div class="team-card glass-panel toc-item" data-id="curated-aaryan" style="--accent: var(--color-primary); text-align: left; align-items: flex-start; padding: 2rem; cursor: pointer;">
+          <div class="card-badge" style="margin-bottom: 0.8rem;">Curated by Aaryan Gada</div>
+          <h3 class="team-name" style="font-size: 1.25rem; margin-bottom: 0.2rem;">"A Word is dead"</h3>
+          <p class="team-role" style="font-size: 0.7rem; margin-bottom: 1rem;">Emily Dickinson</p>
+          <p class="team-bio" style="font-size: 0.85rem; line-height: 1.5; color: var(--color-text-muted);">
+            <strong>[Aaryan's Blurb Placeholder]</strong>: Write a short explanation of why you chose this poem by Emily Dickinson and how its exploration of language and silence connects to your magazine's theme. Click to read curated poem.
+          </p>
+        </div>
+
+        <!-- Curated 2: Steven Misko -->
+        <div class="team-card glass-panel toc-item" data-id="curated-steven" style="--accent: var(--color-accent-teal); text-align: left; align-items: flex-start; padding: 2rem; cursor: pointer;">
+          <div class="card-badge" style="margin-bottom: 0.8rem; color: var(--color-accent-teal);">Curated by Steven Misko</div>
+          <h3 class="team-name" style="font-size: 1.25rem; margin-bottom: 0.2rem;">"The Library of Babel"</h3>
+          <p class="team-role" style="font-size: 0.7rem; margin-bottom: 1rem; color: var(--color-accent-teal);">Jorge Luis Borges</p>
+          <p class="team-bio" style="font-size: 0.85rem; line-height: 1.5; color: var(--color-text-muted);">
+            <strong>[Steven's Blurb Placeholder]</strong>: Write a short explanation of why you selected this story by Jorge Luis Borges and how its infinite library mirrors your magazine's theme. Click to read curated text.
+          </p>
+        </div>
+
+        <!-- Curated 3: Liang Zhang -->
+        <div class="team-card glass-panel toc-item" data-id="curated-liang" style="--accent: var(--color-accent-gold); text-align: left; align-items: flex-start; padding: 2rem; cursor: pointer;">
+          <div class="card-badge" style="margin-bottom: 0.8rem; color: var(--color-accent-gold);">Curated by Liang Zhang</div>
+          <h3 class="team-name" style="font-size: 1.25rem; margin-bottom: 0.2rem;">"O Me! O Life!"</h3>
+          <p class="team-role" style="font-size: 0.7rem; margin-bottom: 1rem; color: var(--color-accent-gold);">Walt Whitman</p>
+          <p class="team-bio" style="font-size: 0.85rem; line-height: 1.5; color: var(--color-text-muted);">
+            <strong>[Liang's Blurb Placeholder]</strong>: Write a short explanation of why you selected this poem by Walt Whitman and how finding human purpose connects to the theme. Click to read curated poem.
+          </p>
+        </div>
+
+        <!-- Curated 4: Farukh Baykhanov -->
+        <div class="team-card glass-panel toc-item" data-id="curated-farukh" style="--accent: var(--color-accent-red); text-align: left; align-items: flex-start; padding: 2rem; cursor: pointer;">
+          <div class="card-badge" style="margin-bottom: 0.8rem; color: var(--color-accent-red);">Curated by Farukh Baykhanov</div>
+          <h3 class="team-name" style="font-size: 1.25rem; margin-bottom: 0.2rem;">"The Road Not Taken"</h3>
+          <p class="team-role" style="font-size: 0.7rem; margin-bottom: 1rem; color: var(--color-accent-red);">Robert Frost</p>
+          <p class="team-bio" style="font-size: 0.85rem; line-height: 1.5; color: var(--color-text-muted);">
+            <strong>[Farukh's Blurb Placeholder]</strong>: Write a short explanation of why you selected this poem by Robert Frost and how decision making relates to probability weights. Click to read curated poem.
+          </p>
+        </div>
+      </div>
+
+      <!-- Creative Advertisement 2: Mnemosyne Vault -->
+      <section class="submissions-section glass-panel" style="--accent: var(--color-accent-gold); margin-bottom: 3.5rem; background: linear-gradient(135deg, rgba(251, 191, 36, 0.05) 0%, rgba(8, 13, 22, 0.4) 100%); width: 100%; max-width: 1100px;">
+        <div class="card-badge" style="color: var(--color-accent-gold);">Sponsor Advertisement</div>
+        <h3 class="section-title" style="font-size: 2.2rem; color: var(--color-text); margin-bottom: 0.5rem;">MNEMOSYNE ARCHIVE</h3>
+        <p class="section-subtitle" style="color: var(--color-accent-gold); margin-bottom: 1.5rem; letter-spacing: 0.1em; font-weight: 700;">SAFEGUARDING INDIVIDUAL HUMAN MEMORY</p>
+        <p class="submissions-desc" style="max-width: 900px; margin-bottom: 1.5rem;">
+          In the age of recursive data training, your personal narratives are valuable. Do not let your lived experiences be digested into statistical averages. Mnemosyne Vault provides local hardware storage keys designed specifically to protect, isolate, and archive your personal stories and diary logs.
+        </p>
+        <button class="btn-primary" style="background: var(--color-accent-gold); color: #000; align-self: flex-start; border-radius: 40px; font-weight: 700; padding: 0.8rem 2rem;" onclick="alert('Mnemosyne Archive Vault encryption keys online. [Simulation Mode Only]')">Provision Memory Vault</button>
+      </section>
+    </div>
+  </div>
+
+  <!-- Page 5: Featured Issue Directory -->
+  <div id="page-featured" class="page-view">
+    <div class="page-content-wrapper">
+      <section class="team-header">
+        <h1 class="team-title">FEATURED ISSUE</h1>
+        <p class="team-subtitle">Directory of original group works and literary connection essays.</p>
+        <div class="journal-divider"></div>
+      </section>
+      
+      <div class="journal-grid" style="grid-template-columns: 1.1fr 0.9fr; max-width: 1100px; width: 100%;">
+        
+        <!-- Column 1: Individual Original Works -->
+        <div class="toc-card glass-panel" style="--accent: var(--color-primary); padding: 2.5rem;">
+          <h3 class="toc-title" style="color: var(--color-primary); margin-bottom: 1.5rem;">Individual Original Works</h3>
+          <div class="toc-list">
+            <div class="toc-item nav-trigger" data-target="article" style="border-color: rgba(56, 189, 248, 0.1);">
+              <div class="toc-meta">Article (Interactive Timeline) &bull; Aaryan Gada</div>
+              <h4 class="toc-item-title" style="color: var(--color-primary);">The Gathering Storm: Winter of 2022</h4>
+              <p class="toc-item-desc">An immersive, scroll-reactive timeline tracing the historical shifts, sovereign anxiety, and release of ChatGPT.</p>
+            </div>
+            
+            <div class="toc-item" data-id="steven-poem" style="border-color: rgba(56, 189, 248, 0.1);">
+              <div class="toc-meta">Poetry &bull; Steven Misko</div>
+              <h4 class="toc-item-title">[Poem Title Placeholder]</h4>
+              <p class="toc-item-desc">Steven's original poem exploring computational language and human reflection. Click to open reading pane.</p>
+            </div>
+            
+            <div class="toc-item" data-id="liang-essay" style="border-color: rgba(56, 189, 248, 0.1);">
+              <div class="toc-meta">Critical Essay &bull; Liang Zhang</div>
+              <h4 class="toc-item-title">[Critical Essay Title Placeholder]</h4>
+              <p class="toc-item-desc">Liang's original critical essay analyzing machine intelligence and narrative framing. Click to open reading pane.</p>
+            </div>
+            
+            <div class="toc-item" data-id="farukh-satire" style="border-color: rgba(56, 189, 248, 0.1);">
+              <div class="toc-meta">Satire &bull; Farukh Baykhanov</div>
+              <h4 class="toc-item-title">[Satirical Essay Title Placeholder]</h4>
+              <p class="toc-item-desc">Farukh's original satirical essay exploring algorithmic consciousness and modern bureaucracy. Click to open reading pane.</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Column 2: Group Literature Connection Essays -->
+        <div class="toc-card glass-panel" style="--accent: var(--color-accent-gold); padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <h3 class="toc-title" style="color: var(--color-accent-gold); margin-bottom: 1.5rem;">Group Connection Writings</h3>
+            <div class="toc-list">
+              <div class="toc-item" data-id="group-macbeth" style="border-color: rgba(251, 191, 36, 0.1);">
+                <div class="toc-meta">Literature Connection &bull; Group Collaboration</div>
+                <h4 class="toc-item-title" style="color: var(--color-accent-gold);">The Narrative Web of Destiny: Prophecy and Autonomy in Macbeth</h4>
+                <p class="toc-item-desc">An analysis connecting Shakespeare's Macbeth to our magazine's theme of pre-computed destiny and human choice. Click to open.</p>
+              </div>
+              
+              <div class="toc-item" data-id="group-kafka" style="border-color: rgba(251, 191, 36, 0.1);">
+                <div class="toc-meta">Kafka Connection &bull; Group Collaboration</div>
+                <h4 class="toc-item-title" style="color: var(--color-accent-gold);">The Latent Fast: Artistry and Obsolescence in A Hunger Artist</h4>
+                <p class="toc-item-desc">A comparative study linking Franz Kafka's A Hunger Artist to the human struggle for artistic validity. Click to open.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Sleek Back Page Footer inside Featured Issue -->
+          <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem; margin-top: 2.5rem; text-align: center;">
+            <p style="font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-text-muted);">Synapse Issue 01 &bull; Back Page</p>
+            <p style="font-family: var(--font-story); font-size: 0.9rem; font-style: italic; color: var(--color-text-muted-light); margin-top: 0.5rem; line-height: 1.4;">"Stories are the synapses that link separate consciousnesses into a single shared reality."</p>
+            <p style="font-family: var(--font-body); font-size: 0.65rem; color: var(--color-text-muted); margin-top: 1rem;">&copy; 2026 Synapse Editorial. All rights reserved.</p>
+          </div>
+        </div>
+        
       </div>
     </div>
   </div>
@@ -246,15 +516,15 @@
     <section class="chapter active" id="ch-title" data-index="0" style="--chapter-theme-color: var(--color-primary);">
       <div class="chapter-content" style="text-align: center;">
         <div class="chapter-meta" style="justify-content: center;">
-          <span class="chapter-date">A Story of Friction & Focus</span>
+          <span class="chapter-date">From Winter of 2022 to the Present Day</span>
         </div>
         <h1 class="story-text" style="font-family: var(--font-story); font-size: 3.2rem; line-height: 1.25; margin-bottom: 1.5rem; font-weight: 700;">
-          The Gathering Storm
+          An Accelerated History of AI
         </h1>
-        <p style="font-family: var(--font-body); color: var(--color-text-muted); font-size: 1rem; letter-spacing: 0.15em; text-transform: uppercase;">
-          The Winter of 2022
+        <p style="font-family: var(--font-body); color: var(--color-text-muted); font-size: 1rem; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 1rem;">
+          by Aaryan Gada
         </p>
-        <span class="chapter-watermark">2022</span>
+        <span class="chapter-watermark">AI</span>
       </div>
       <div class="scroll-hint">
         <span class="scroll-hint-text">Scroll to descend</span>
@@ -435,7 +705,7 @@
         </div>
         <h2 class="timeline-title">The Initial Spark</h2>
         <p class="story-text timeline-body-text">
-          November 2022: OpenAI launches <em>ChatGPT</em>. Operating on GPT-3.5, it democratizes access to large language models, triggering a profound paradigm shift in human-computer interaction and setting off a hyper-accelerated arms race in Silicon Valley.
+          November 2022: OpenAI releases <em>ChatGPT</em>. Powered by a fine-tuned version of GPT-3.5, specifically GPT-3.5 turbo, it marks the first time that the broad public has access to frontier large language models. This introduction of generative artificial intelligence changes the human-machine interaction paradigm, kicking off a hyper-accelerated AI arms race in Silicon Valley. This event is the “Netscape moment” of the artificial intelligence industry.
         </p>
         <span class="chapter-watermark">2022</span>
       </div>
@@ -448,15 +718,15 @@
           <span class="chapter-number">11</span>
           <span class="chapter-date">2023</span>
         </div>
-        <h2 class="timeline-title">The Great Scaling & Multimodal Wars</h2>
+        <h2 class="timeline-title">The Great Scaling and Multimodal Wars</h2>
         <p class="story-text timeline-body-text">
-          Early 2023: Tech giants scramble to respond. Microsoft integrates OpenAI's models into its core suite, while Google rapidly deploys its experimental conversational engine, <em>Bard</em>.
+          Early 2023: Big tech scrambles to respond. Microsoft launches a major partnership with OpenAI, integrating GPT models throughout the Office suite of applications. Google deploys its experimental conversational model, Bard. Early adoption of ChatGPT makes it a sensation around the internet.
         </p>
         <p class="story-text timeline-body-text">
-          March 2023: OpenAI releases <em>GPT-4</em>, establishing a massive leap in reasoning, problem-solving, and standardized test performance.
+          March 2023: OpenAI releases <em>GPT-4</em>, a model characterized by being a massive leap in reasoning, problem-solving, and standardized test performance.
         </p>
         <p class="story-text timeline-body-text">
-          July 2023: Meta enters the arena with <em>Llama 2</em>, open-sourcing high-performance weights and igniting a global developer movement to build, fine-tune, and run localized models independently of proprietary APIs.
+          July 2023: Meta enters the AI race with <em>Llama 2</em>, open-sourcing its weights and igniting a global developer movement to build, fine-tune, and run local models, removing the reliance on proprietary APIs.
         </p>
         <span class="chapter-watermark">2023</span>
       </div>
@@ -471,7 +741,7 @@
         </div>
         <h2 class="timeline-title">Multimodal Breakthroughs & The Dawn of Agency</h2>
         <p class="story-text timeline-body-text">
-          Early to Mid 2024: AI transitions from pure text interfaces to true multimodal systems. Google introduces <em>Gemini 1.5</em> with a historic context window, and OpenAI releases <em>GPT-4o</em>, processing voice, text, and visual data almost instantaneously.
+          Early to Mid 2024: AI transitions from pure text interfaces such as the common chatbot to multimodal systems. Google introduces the <em>Gemini 1.5 Pro</em> model, boasting a groundbreaking context window of 2 million tokens. OpenAI releases <em>GPT-4o</em>, the “o” representing “omni.” The model introduced voice, text, and image processing natively within the model at high speeds.
         </p>
         <p class="story-text timeline-body-text">
           Late 2024: The industry shifts focus from "stateless" chat interfaces to "stateful" agentic workflows. OpenAI introduces its <em>o-series reasoning models</em>, demonstrating "System 2" reflective thinking, allowing models to deliberate and self-correct before responding.
@@ -489,10 +759,10 @@
         </div>
         <h2 class="timeline-title">Market Disruptions & The Agentic Inflection</h2>
         <p class="story-text timeline-body-text">
-          January 2025: The geopolitical landscape of AI shifts dramatically as Chinese startup <em>DeepSeek</em> releases highly efficient, low-cost open-weights models. The sudden democratization of frontier-class capabilities triggers a historic tech-stock sell-off, temporarily erasing hundreds of billions in market value from hardware giants.
+          January 2025: The geopolitical landscape of AI shifts dramatically as Chinese startup <em>DeepSeek</em> releases highly efficient, low-cost open-weights models. The sudden release of frontier-class capabilities in an open-weight model triggers a historic tech-stock sell-off, erasing hundreds of billions of dollars in market cap from hardware giants. This event was known as the “Deepseek moment.”
         </p>
         <p class="story-text timeline-body-text">
-          Mid-to-Late 2025: Agentic AI moves into active production. Anthropic previews <em>Claude Code</em>, a developer-centric agent operating directly within terminals, transforming the AI from an assistant into an autonomous teammate. OpenAI launches <em>GPT-5</em>, pushing the boundary of complex, multi-step problem solving.
+          Mid-to-Late 2025: Agentic AI moves into active production. Anthropic previews the groundbreaking <em>Claude Code</em>, a terminal-based agentic coding tool, transforming the AI from an assistant into an autonomous teammate. OpenAI launches <em>GPT-5</em>, pushing the boundary of complex, multi-step problem solving.
         </p>
         <span class="chapter-watermark">2025</span>
       </div>
@@ -506,13 +776,81 @@
           <span class="chapter-date">2026</span>
         </div>
         <h2 class="timeline-title">The Agentic Frontier</h2>
-        <p class="story-text timeline-body-text" style="font-size: 2.1rem; line-height: 1.5; font-weight: 700; color: var(--color-accent-teal); text-shadow: 0 0 15px rgba(6, 182, 212, 0.25);">
-          Present Day: Chatbots are largely a relic of the past.
-        </p>
         <p class="story-text timeline-body-text" style="font-size: 1.5rem; line-height: 1.6; color: var(--color-text-muted-light);">
-          The industry is defined by autonomous agentic systems capable of executing extended, hours-long tasks—from complex software engineering and continuous scientific research to managing entire business pipelines with minimal human intervention.
+          Present Day: Chatbots are largely a relic of the past, or more accurately, only used by people who are not on the frontier of AI. The industry is defined by autonomous agentic systems capable of executing extended, hours-long tasks, from complex software engineering and continuous scientific research to managing entire business pipelines with minimal human intervention.
         </p>
         <span class="chapter-watermark">2026</span>
+      </div>
+    </section>
+
+    <!-- Chapter 15: Present Day Deep Dive -->
+    <section class="chapter timeline-chapter" id="ch-timeline-agentic" data-index="15" style="--chapter-theme-color: #10b981;">
+      <div class="chapter-content timeline-card agentic-workspace-card">
+        <div class="chapter-meta">
+          <span class="chapter-number">15</span>
+          <span class="chapter-date">Present Day</span>
+        </div>
+        <h2 class="timeline-title">Deep Dive: Inside the Agentic Loop</h2>
+        
+        <!-- Interactive Workspace -->
+        <div class="agent-workspace">
+          <!-- Left Pane: Workspace File Tree and Commands -->
+          <div class="agent-sidebar">
+            <div class="sidebar-section-title">CHOOSE AGENT TASK</div>
+            <div class="task-selector">
+              <button class="agent-task-btn" data-task="dev">💻 Software Dev</button>
+              <button class="agent-task-btn" data-task="science">🔬 Bioinformatics</button>
+              <button class="agent-task-btn" data-task="hedge">📈 Quant Hedge</button>
+            </div>
+            
+            <div class="sidebar-section-title" style="margin-top: 1.2rem;">WORKSPACE FILES</div>
+            <div class="agent-file-list" id="agent-file-list">
+              <div class="file-item"><span class="file-icon">📁</span> src/</div>
+              <div class="file-item indent"><span class="file-icon">📄</span> index.js</div>
+              <div class="file-item indent"><span class="file-icon">📄</span> utils.js</div>
+              <div class="file-item"><span class="file-icon">📁</span> tests/</div>
+              <div class="file-item"><span class="file-icon">📄</span> package.json</div>
+            </div>
+          </div>
+          
+          <!-- Right Pane: Reasoning and Console Execution -->
+          <div class="agent-console">
+            <div class="console-header">
+              <div class="console-badge-wrapper">
+                <span class="status-indicator"></span>
+                <span class="status-label" id="agent-status">STATUS: IDLE</span>
+              </div>
+              <div class="agent-model-name">ANTIGRAVITY v3.5</div>
+            </div>
+            
+            <!-- Thought Log (System 2 Thinking) -->
+            <div class="thought-log-container">
+              <div class="pane-title">SYSTEM 2 THINKING CHAIN</div>
+              <div class="thought-log" id="thought-log">
+                Select an autonomous agent task on the left to begin...
+              </div>
+            </div>
+            
+            <!-- Terminal Output -->
+            <div class="terminal-log-container">
+              <div class="pane-title">TERMINAL OUTPUT & TOOL RUNS</div>
+              <div class="terminal-log" id="terminal-log">
+                $ ready.
+              </div>
+            </div>
+            
+            <!-- Collaborative Approval Overlay/Banner -->
+            <div class="approval-banner" id="approval-banner">
+              <span class="approval-text">Awaiting task selection...</span>
+              <div class="approval-actions">
+                <button class="btn-approve" id="btn-agent-approve" disabled>Approve Action</button>
+                <button class="btn-reset" id="btn-agent-reset" disabled>Reset</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <span class="chapter-watermark">AGENTS</span>
       </div>
     </section>
 

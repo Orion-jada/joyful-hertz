@@ -64,7 +64,7 @@ class Particle {
   
   update() {
     const s = state.canvasState;
-    const isNeuralNet = ['frontier', 'tension', 'vortex'].includes(s);
+    const isNeuralNet = ['frontier', 'tension', 'vortex', 'agentic'].includes(s);
     
     // Glow decay
     if (isNeuralNet && this.glowStrength > 0) {
@@ -134,6 +134,14 @@ class Particle {
       this.x += 0.8;
       this.color = { r: 6, g: 182, b: 212 }; // Cyan matching #06b6d4
     }
+    else if (s === 'agentic') {
+      // Downward falling flow representing data cascades
+      this.vy = Math.abs(this.vy);
+      if (this.vy < 0.3) this.vy = 0.6;
+      this.x += this.vx * 0.4;
+      this.y += this.vy * 0.9;
+      this.color = { r: 16, g: 185, b: 129 }; // Emerald green matching #10b981
+    }
     else if (s === 'chatgpt') {
       this.vibrateOffset.x = 0;
       this.vibrateOffset.y = 0;
@@ -196,7 +204,7 @@ class Particle {
           this.vibrateOffset.x += (Math.random() - 0.5) * force * 10;
           this.vibrateOffset.y += (Math.random() - 0.5) * force * 10;
         }
-      } else if (s === 'vortex' || s === 'pulses' || s === 'frontier') {
+      } else if (s === 'vortex' || s === 'pulses' || s === 'frontier' || s === 'agentic') {
         radius = 240;
         forceStrength = 4.0; // Repelling force for laminar deflection
         if (dist < radius) {
@@ -290,7 +298,7 @@ export function triggerShockwave() {
 // Update and draw signal pulses
 function updateAndDrawPulses() {
   const s = state.canvasState;
-  const isNeuralNet = ['frontier', 'tension', 'vortex'].includes(s);
+  const isNeuralNet = ['frontier', 'tension', 'vortex', 'agentic'].includes(s);
   if (!isNeuralNet) {
     activePulses.length = 0; // Clear immediately on state exit
     return;
@@ -299,6 +307,8 @@ function updateAndDrawPulses() {
   let pulseColor = { r: 13, g: 242, b: 201 }; // teal (home/frontier)
   if (s === 'tension') {
     pulseColor = { r: 239, g: 68, b: 68 }; // red/coral (mission)
+  } else if (s === 'agentic') {
+    pulseColor = { r: 16, g: 185, b: 129 }; // green/emerald (agentic)
   } else if (s === 'vortex') {
     if (state.activeChapter === 10) {
       pulseColor = { r: 13, g: 242, b: 201 }; // Teal for Ch 10
@@ -417,6 +427,10 @@ function drawConnections() {
     maxDistance = 130;
     r = 6; g = 182; b = 212; // Cyan
     baseAlpha = 0.20;
+  } else if (s === 'agentic') {
+    maxDistance = 120;
+    r = 16; g = 185; b = 129; // Emerald green
+    baseAlpha = 0.25;
   }
   
   ctx.lineWidth = 0.8;
@@ -475,7 +489,7 @@ export function renderCanvas() {
   drawConnections();
   
   // Spontaneous random signal generation
-  const isNeuralNet = ['frontier', 'tension', 'vortex'].includes(s);
+  const isNeuralNet = ['frontier', 'tension', 'vortex', 'agentic'].includes(s);
   if (isNeuralNet && Math.random() < 0.02 && particles.length > 0) {
     const randParticle = particles[Math.floor(Math.random() * particles.length)];
     randParticle.fire();

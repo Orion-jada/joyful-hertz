@@ -31,6 +31,7 @@ import {
 } from './js/audio.js';
 import { initTerminal } from './js/terminal.js';
 import { initRouter, resolveInitialRoute } from './js/router.js';
+import { initAgentWorkspace } from './js/agent.js';
 
 // Set initial canvas dimensions
 canvas.width = state.width;
@@ -39,10 +40,11 @@ canvas.height = state.height;
 // Start particle rendering loop
 requestAnimationFrame(renderCanvas);
 
-// Initialize router and terminal dialog mockups
+// Initialize router, terminal, and agentic workspace simulations
 initRouter();
 resolveInitialRoute();
 initTerminal();
+initAgentWorkspace();
 
 // ------------------------------------------
 // 1. Interactive Dot Navigation Generation
@@ -86,11 +88,11 @@ export function updateTimelineOffsets() {
   const currentScrollChapter = scrollTop / viewportHeight;
   
   // The timeline is active if the scroll position is within the timeline range
-  // We widen it slightly to make transitions smooth (chapters 10 to 14)
-  const isTimelineActive = currentScrollChapter >= 9.0 && currentScrollChapter <= 14.5;
+  // We widen it slightly to make transitions smooth (chapters 10 to 15)
+  const isTimelineActive = currentScrollChapter >= 9.0 && currentScrollChapter <= 15.5;
 
   chapters.forEach((chapter, index) => {
-    if (index >= 10 && index <= 14) {
+    if (index >= 10 && index <= 15) {
       const card = chapter.querySelector('.timeline-card');
       if (card) {
         if (isTimelineActive && isDesktop) {
@@ -187,6 +189,8 @@ export function updateActiveChapter(activeIndex) {
     }
   } else if (activeIndex === 14) {
     state.canvasState = 'frontier';
+  } else if (activeIndex === 15) {
+    state.canvasState = 'agentic';
   }
   
   // 4. Propagate theme colors
@@ -205,7 +209,7 @@ export function updateActiveChapter(activeIndex) {
     document.body.classList.remove('chatgpt-active');
   }
   
-  const isTimelineState = ['vortex', 'pulses', 'deepseek', 'frontier'].includes(state.canvasState);
+  const isTimelineState = ['vortex', 'pulses', 'deepseek', 'frontier', 'agentic'].includes(state.canvasState);
   if (isTimelineState) {
     document.body.classList.add('timeline-active');
   } else {

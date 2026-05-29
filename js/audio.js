@@ -180,6 +180,10 @@ export function startArpeggiator(chapterIndex) {
     scale = [523.25, 659.25, 783.99, 1046.50, 1174.66]; // 2026: C major pentatonic (C5, E5, G5, C6, D6)
     tempo = 90;
     startAgenticBeat();
+  } else if (chapterIndex === 15) {
+    scale = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50]; // Present Day: Full C major/A minor mix, fast agentic pulse
+    tempo = 80;
+    startAgenticBeat();
   }
   
   let noteIndex = 0;
@@ -352,10 +356,10 @@ export function playNodeChime() {
   
   // Select pitch scale based on current active view
   let pitches = [261.63, 293.66, 329.63, 392.00, 440.00]; // C Major Pentatonic (Home)
-  if (state.activePage === 'mission') {
-    pitches = [220.00, 246.94, 261.63, 329.63, 392.00]; // A Minor Pentatonic (Mission)
-  } else if (state.activePage === 'team') {
-    pitches = [293.66, 349.23, 440.00, 523.25, 587.33]; // D minor Spacey (Board)
+  if (state.activePage === 'manifesto') {
+    pitches = [220.00, 246.94, 261.63, 329.63, 392.00]; // A Minor Pentatonic (Manifesto)
+  } else if (state.activePage === 'agents' || state.activePage === 'curated' || state.activePage === 'featured') {
+    pitches = [293.66, 349.23, 440.00, 523.25, 587.33]; // D minor Spacey (Agents/Curated/Featured)
   }
   
   const pitch = pitches[Math.floor(Math.random() * pitches.length)];
