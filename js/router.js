@@ -15,9 +15,13 @@ import {
   setNoiseVolume,
   playPadChime
 } from './audio.js';
+import { renderUsesDetail } from './uses.js';
 
-// We import updateActiveChapter from the parent app.js (using relative path)
-import { updateActiveChapter } from '../app.js';
+// Callback for updating active chapter to resolve circular dependency
+let updateActiveChapterFn = null;
+export function setUpdateActiveChapter(fn) {
+  updateActiveChapterFn = fn;
+}
 
 // Article content data for secondary pieces
 const articleData = {
@@ -205,6 +209,15 @@ export function navigateToPage(targetPageId, triggerPush = true) {
 
     state.activePage = targetPageId;
 
+    if (targetPageId === 'uses') {
+      const tabs = document.querySelectorAll('.uses-tab');
+      tabs.forEach((t, i) => {
+        if (i === 0) t.classList.add('active');
+        else t.classList.remove('active');
+      });
+      renderUsesDetail(1);
+    }
+
     // Update Browser Document Title
     if (targetPageId === 'home') {
       document.title = "Home | SYNAPSE";
@@ -226,6 +239,8 @@ export function navigateToPage(targetPageId, triggerPush = true) {
       document.title = "Mnemosyne Memory Decrypter | SYNAPSE";
     } else if (targetPageId === 'soundboard') {
       document.title = "Acoustic Synapses Soundboard | SYNAPSE";
+    } else if (targetPageId === 'uses') {
+      document.title = "Top 10 Uses of AI | SYNAPSE";
     } else if (targetPageId === 'satire') {
       document.title = "A Modest Proposal | SYNAPSE";
     } else if (targetPageId === 'featured') {
@@ -262,7 +277,7 @@ export function navigateToPage(targetPageId, triggerPush = true) {
       } else if (targetPageId === 'curated') {
         state.canvasState = 'pulses';
         updateAudioStateForPage('curated');
-      } else if (['sandbox', 'quiz', 'scribe', 'encrypt', 'decrypt', 'soundboard'].includes(targetPageId)) {
+      } else if (['sandbox', 'quiz', 'scribe', 'encrypt', 'decrypt', 'soundboard', 'uses'].includes(targetPageId)) {
         state.canvasState = 'pulses';
         updateAudioStateForPage(targetPageId);
       } else if (targetPageId === 'featured') {
@@ -273,7 +288,9 @@ export function navigateToPage(targetPageId, triggerPush = true) {
       // Force active chapter update to bypass early returns and start audio hum immediately
       const currentChapter = state.activeChapter;
       state.activeChapter = -1;
-      updateActiveChapter(currentChapter);
+      if (updateActiveChapterFn) {
+        updateActiveChapterFn(currentChapter);
+      }
     }
   };
 
@@ -330,6 +347,8 @@ function closeDrawer() {
     document.title = "Mnemosyne Memory Decrypter | SYNAPSE";
   } else if (state.activePage === 'soundboard') {
     document.title = "Acoustic Synapses Soundboard | SYNAPSE";
+  } else if (state.activePage === 'uses') {
+    document.title = "Top 10 Uses of AI | SYNAPSE";
   } else if (state.activePage === 'article') {
     document.title = "An Accelerated History of AI | SYNAPSE";
   } else {
@@ -732,6 +751,19 @@ export function initRouter() {
     });
   }
 
+  // Uses of AI Interactive Tabs Logic
+  const usesTabs = document.querySelectorAll('.uses-tab');
+  if (usesTabs.length > 0) {
+    usesTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        usesTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const idx = parseInt(tab.getAttribute('data-index') || '1', 10);
+        renderUsesDetail(idx);
+      });
+    });
+  }
+
   // Popstate event handler for browser Back/Forward navigation
   window.addEventListener('popstate', (e) => {
     if (e.state && e.state.pageId) {
@@ -749,6 +781,7 @@ export function initRouter() {
       else if (path === 'encrypt') pageId = 'encrypt';
       else if (path === 'decrypt') pageId = 'decrypt';
       else if (path === 'soundboard') pageId = 'soundboard';
+      else if (path === 'uses') pageId = 'uses';
       else if (path === 'satire') pageId = 'satire';
       else if (path === 'featured') pageId = 'featured';
       else if (path === 'article') pageId = 'article';
@@ -784,6 +817,8 @@ export function resolveInitialRoute() {
     targetPageId = 'decrypt';
   } else if (path === 'soundboard') {
     targetPageId = 'soundboard';
+  } else if (path === 'uses') {
+    targetPageId = 'uses';
   } else if (path === 'satire') {
     targetPageId = 'satire';
   } else if (path === 'featured') {

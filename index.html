@@ -2,14 +2,23 @@
 <html lang="en">
 
 <head>
+  <script>
+    window.onerror = function(message, source, lineno, colno, error) {
+      alert("GLOBAL ERROR: " + message + "\nSource: " + source + "\nLine: " + lineno);
+      return false;
+    };
+    window.onunhandledrejection = function(event) {
+      alert("UNHANDLED REJECTION: " + event.reason);
+    };
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description"
     content="An interactive storytelling experience tracing the tense, cold winter of 2022 and the pivotal release that changed everything.">
   <title>An Accelerated History of AI</title>
-  <link rel="stylesheet" href="/css/base.css">
-  <link rel="stylesheet" href="/css/journal.css">
-  <link rel="stylesheet" href="/css/story.css">
+  <link rel="stylesheet" href="/css/base.css?v=1.0.6">
+  <link rel="stylesheet" href="/css/journal.css?v=1.0.6">
+  <link rel="stylesheet" href="/css/story.css?v=1.0.6">
 </head>
 
 <body>
@@ -23,10 +32,9 @@
   <div class="sound-overlay" id="sound-overlay">
     <div class="sound-prompt-card">
       <div class="sound-prompt-icon">🔊</div>
-      <h2 class="sound-prompt-title">The Gathering Storm</h2>
+      <h2 class="sound-prompt-title">SYNAPSE</h2>
       <p class="sound-prompt-subtitle">
-        This experience includes a real-time, scroll-reactive ambient audio engine that enhances the storytelling
-        atmosphere.
+        This interactive journal includes a real-time, scroll-reactive ambient audio engine that enhances the reading atmosphere.
       </p>
       <div class="sound-prompt-buttons">
         <button class="btn-primary" id="btn-sound-on">Enter with Sound</button>
@@ -43,7 +51,7 @@
       <button class="nav-link" data-target="manifesto">Manifesto</button>
       <button class="nav-link" data-target="agents">Agents</button>
       <button class="nav-link" data-target="curated">Curated</button>
-      <button class="nav-link" data-target="sandbox">Sandbox</button>
+      <button class="nav-link" data-target="sandbox">Cortex Labs</button>
       <button class="nav-link" data-target="featured">Featured Issue</button>
     </nav>
     <div class="audio-control" id="audio-toggle" aria-label="Toggle ambient sound">
@@ -78,44 +86,38 @@
         </p>
       </section>
 
-      <div class="journal-grid">
-        <div class="featured-card glass-panel" style="--accent: var(--color-primary);">
-          <div class="card-badge">Featured Interactive Article</div>
-          <h2 class="card-title">An Accelerated History of AI</h2>
-          <p class="card-excerpt">
-            An immersive, scroll-reactive journey tracing the evolution of artificial intelligence from the tense
-            geopolitical winter of 2022 to the autonomous agentic frontier of 2026.
-          </p>
-          <div class="card-meta">
-            <span>By Aaryan Gada</span> &bull; <span>Scroll-reactive Synth Audio</span>
+      <div class="featured-issue-card glass-panel" style="--accent: var(--color-primary);">
+        <h3 class="featured-issue-heading">Featured Issue</h3>
+        <div class="featured-issue-grid">
+
+          <div class="issue-item nav-trigger" data-target="article">
+            <div class="issue-item-badge">Interactive Article</div>
+            <h4 class="issue-item-title">An Accelerated History of AI</h4>
+            <p class="issue-item-desc">An immersive, scroll-reactive journey tracing the evolution of artificial intelligence from the tense geopolitical winter of 2022 to the autonomous agentic frontier of 2026.</p>
+            <div class="issue-item-meta">By Aaryan Gada &bull; Scroll-reactive Synth Audio</div>
           </div>
-          <button class="btn-primary btn-glow nav-trigger" data-target="article">Begin Reading</button>
-        </div>
 
-        <div class="toc-card glass-panel" style="--accent: var(--color-accent-gold);">
-          <h3 class="toc-title">Issue 01: Table of Contents</h3>
-          <div class="toc-list">
-            <div class="toc-item" data-id="steven-poem">
-              <div class="toc-meta">Poetry &bull; Steven Misko</div>
-              <h4 class="toc-item-title">[Poem Title Placeholder]</h4>
-              <p class="toc-item-desc">An original poem exploring human reflection and organic thought patterns in the
-                age of algorithmic syntax.</p>
-            </div>
-
-            <div class="toc-item" data-id="liang-essay">
-              <div class="toc-meta">Critical Essay &bull; Liang Zhang</div>
-              <h4 class="toc-item-title">[Critical Essay Title Placeholder]</h4>
-              <p class="toc-item-desc">A literary analysis investigating how machine translation and large language
-                models affect cultural storytelling constraints.</p>
-            </div>
-
-            <div class="toc-item nav-trigger" data-target="satire">
-              <div class="toc-meta">Satire &bull; Farukh Baykhanov</div>
-              <h4 class="toc-item-title">Prompt Engineering Your Way to an Ivy League Degree</h4>
-              <p class="toc-item-desc">A sharp satirical essay proposing the systematic automation of teenage social and
-                emotional life to guarantee admission to prestigious universities.</p>
-            </div>
+          <div class="issue-item" data-id="steven-poem">
+            <div class="issue-item-badge">Poetry</div>
+            <h4 class="issue-item-title">[Poem Title Placeholder]</h4>
+            <p class="issue-item-desc">An original poem exploring human reflection and organic thought patterns in the age of algorithmic syntax.</p>
+            <div class="issue-item-meta">By Steven Misko</div>
           </div>
+
+          <div class="issue-item" data-id="liang-essay">
+            <div class="issue-item-badge">Critical Essay</div>
+            <h4 class="issue-item-title">[Critical Essay Title Placeholder]</h4>
+            <p class="issue-item-desc">A literary analysis investigating how machine translation and large language models affect cultural storytelling constraints.</p>
+            <div class="issue-item-meta">By Liang Zhang</div>
+          </div>
+
+          <div class="issue-item nav-trigger" data-target="satire">
+            <div class="issue-item-badge">Satire</div>
+            <h4 class="issue-item-title">Prompt Engineering Your Way to an Ivy League Degree</h4>
+            <p class="issue-item-desc">A sharp satirical essay proposing the systematic automation of teenage social and emotional life to guarantee admission to prestigious universities.</p>
+            <div class="issue-item-meta">By Farukh Baykhanov</div>
+          </div>
+
         </div>
       </div>
 
@@ -488,41 +490,18 @@
             </div>
           </div>
 
-        </div>
-
-        <!-- Sidebar Column: Uses of AI Recommendations -->
-        <div class="sandbox-sidebar">
-          <div class="toc-card glass-panel"
-            style="--accent: var(--color-accent-teal); padding: 2rem; position: sticky; top: 2rem;">
-            <h4 class="toc-title" style="color: var(--color-accent-teal); margin-bottom: 1rem; font-size: 1.2rem;">Uses
-              of AI: Recommendations</h4>
-            <p class="toc-item-desc" style="margin-bottom: 1.2rem; font-size: 0.85rem; line-height: 1.5;">Our editors'
-              curated list of recommended ways to leverage machine assistance in creative and academic workflows:</p>
-
-            <div style="display: flex; flex-direction: column; gap: 1.2rem; text-align: left; font-size: 0.85rem;">
-              <div style="border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 0.8rem;">
-                <strong style="color: var(--color-text); display: block; margin-bottom: 0.3rem;">1. Concept Mapping &
-                  Ideation</strong>
-                <span style="color: var(--color-text-muted); line-height: 1.4; display: block;">Use LLMs to brainstorm
-                  thematic connections or structure outlines. Propose a seed topic and ask the model to generate
-                  opposite perspectives to find the friction points.</span>
-              </div>
-              <div style="border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 0.8rem;">
-                <strong style="color: var(--color-text); display: block; margin-bottom: 0.3rem;">2. Stylistic Constraint
-                  Prototyping</strong>
-                <span style="color: var(--color-text-muted); line-height: 1.4; display: block;">Test unique writing
-                  parameters (e.g., Oulipo-style constraints, specific syllable caps) by programming code templates to
-                  validate word usage statistics instantly.</span>
-              </div>
-              <div>
-                <strong style="color: var(--color-text); display: block; margin-bottom: 0.3rem;">3. Code Sandbox
-                  Instrumentation</strong>
-                <span style="color: var(--color-text-muted); line-height: 1.4; display: block;">Build scroll-reactive
-                  components or audio synthesize nodes using JavaScript assisted by LLM syntax generation to create
-                  tactile reading systems.</span>
-              </div>
+          <!-- Card 6: Top 10 Ways to Use AI -->
+          <div class="game-card glass-panel nav-trigger" data-target="uses"
+            style="--accent: var(--color-accent-teal); cursor: pointer;">
+            <div class="game-header">
+              <span class="game-badge" style="color: var(--color-accent-teal);">Interactive 06</span>
+              <h3 class="game-title">Top 10 Ways to Use AI</h3>
+              <p class="game-desc" style="margin-bottom: 1.5rem;">Explore our curated, interactive guide on the most effective ways to leverage artificial intelligence in daily workflows.</p>
+              <span class="launch-link"
+                style="color: var(--color-accent-teal); font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; gap: 0.3rem; font-family: var(--font-body);">Launch Guide &rarr;</span>
             </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -807,6 +786,50 @@
       </div>
     </div>
   </div>
+
+  <!-- Page: Top 10 Ways to Use AI -->
+  <div id="page-uses" class="page-view">
+    <div class="page-content-wrapper">
+      <div style="max-width: 1000px; width: 100%; display: flex; flex-direction: column; gap: 1.5rem;">
+        <button class="nav-trigger back-hub-link" data-target="sandbox"
+          style="background: none; border: none; color: var(--color-text-muted); cursor: pointer; text-align: left; padding: 0; font-size: 0.9rem; font-weight: 600; transition: color 0.2s; align-self: flex-start; font-family: var(--font-body);">&larr;
+          Return to Cortex Labs</button>
+
+        <div class="game-card glass-panel" style="--accent: var(--color-accent-teal); padding: 3rem; margin-top: 1rem;">
+          <div class="game-header" style="margin-bottom: 2rem;">
+            <span class="game-badge" style="color: var(--color-accent-teal);">Interactive Guide</span>
+            <h2 class="game-title" style="font-size: 1.8rem;">Top 10 Ways to Use AI</h2>
+            <p class="game-desc" style="font-size: 0.9rem;">Explore standard and creative workflows powered by machine assistance. Select a category below to test the interactive simulation.</p>
+          </div>
+
+          <div class="uses-container" style="display: grid; grid-template-columns: 280px 1fr; gap: 2rem; min-height: 480px; align-items: start;">
+            <!-- Left Tab Navigation -->
+            <div class="uses-tabs" style="display: flex; flex-direction: column; gap: 0.5rem; background: rgba(0, 0, 0, 0.2); padding: 1rem; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.03);">
+              <button class="uses-tab active" data-index="1">1. Writer's Block</button>
+              <button class="uses-tab" data-index="2">2. Help with Code</button>
+              <button class="uses-tab" data-index="3">3. Explaining Simply</button>
+              <button class="uses-tab" data-index="4">4. Fixing Emails</button>
+              <button class="uses-tab" data-index="5">5. Data Trends</button>
+              <button class="uses-tab" data-index="6">6. Thought Organization</button>
+              <button class="uses-tab" data-index="7">7. Custom Plan Builder</button>
+              <button class="uses-tab" data-index="8">8. Stress-free Practice</button>
+              <button class="uses-tab" data-index="9">9. Task Automation</button>
+              <button class="uses-tab" data-index="10">10. Business Websites</button>
+            </div>
+
+            <!-- Right Simulation Dashboard Panel -->
+            <div class="uses-panel glass-panel" style="padding: 2.2rem; min-height: 480px; background: rgba(5, 8, 15, 0.4); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.05); display: flex; flex-direction: column; justify-content: space-between;">
+              <div id="uses-panel-content">
+                <!-- Content injected dynamically by JS -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Page 5: Featured Issue Directory -->
   <div id="page-featured" class="page-view">
     <div class="page-content-wrapper">
@@ -1660,7 +1683,7 @@
     </div>
   </div>
 
-  <script type="module" src="/app.js"></script>
+  <script type="module" src="/app.js?v=1.0.6"></script>
 </body>
 
 </html>

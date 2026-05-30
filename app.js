@@ -30,7 +30,7 @@ import {
   playKeypressSound
 } from './js/audio.js';
 import { initTerminal } from './js/terminal.js';
-import { initRouter, resolveInitialRoute } from './js/router.js';
+import { initRouter, resolveInitialRoute, setUpdateActiveChapter } from './js/router.js';
 import { initAgentWorkspace } from './js/agent.js';
 
 // Set initial canvas dimensions
@@ -41,6 +41,7 @@ canvas.height = state.height;
 requestAnimationFrame(renderCanvas);
 
 // Initialize router, terminal, and agentic workspace simulations
+setUpdateActiveChapter(updateActiveChapter);
 initRouter();
 resolveInitialRoute();
 initTerminal();

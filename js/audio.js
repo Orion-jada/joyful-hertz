@@ -100,10 +100,9 @@ export function initAudio() {
 }
 
 function createNoiseBufferNode() {
-  if (!window.AudioContext && !window.webkitAudioContext) return null;
-  const ctxTemp = new (window.AudioContext || window.webkitAudioContext)();
-  const bufferSize = ctxTemp.sampleRate * 2;
-  const noiseBuffer = ctxTemp.createBuffer(1, bufferSize, ctxTemp.sampleRate);
+  if (!audioCtx) return null;
+  const bufferSize = audioCtx.sampleRate * 2;
+  const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
   const output = noiseBuffer.getChannelData(0);
   
   for (let i = 0; i < bufferSize; i++) {
