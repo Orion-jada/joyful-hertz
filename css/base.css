@@ -29,6 +29,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+button, input, select, textarea {
+  font-family: inherit;
+}
+
 html, body {
   background-color: var(--color-bg);
   color: var(--color-text);

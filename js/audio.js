@@ -358,8 +358,8 @@ export function playNodeChime() {
   let pitches = [261.63, 293.66, 329.63, 392.00, 440.00]; // C Major Pentatonic (Home)
   if (state.activePage === 'manifesto') {
     pitches = [220.00, 246.94, 261.63, 329.63, 392.00]; // A Minor Pentatonic (Manifesto)
-  } else if (state.activePage === 'agents' || state.activePage === 'curated' || state.activePage === 'featured') {
-    pitches = [293.66, 349.23, 440.00, 523.25, 587.33]; // D minor Spacey (Agents/Curated/Featured)
+  } else if (['agents', 'curated', 'featured', 'sandbox', 'quiz', 'scribe', 'encrypt', 'decrypt', 'soundboard', 'satire'].includes(state.activePage)) {
+    pitches = [293.66, 349.23, 440.00, 523.25, 587.33]; // D minor Spacey (Agents/Curated/Featured/Sandbox/Sub-pages)
   }
   
   const pitch = pitches[Math.floor(Math.random() * pitches.length)];
@@ -448,4 +448,67 @@ export function playKeypressSound() {
   gainNode.connect(masterGain || audioCtx.destination);
   osc.start(now);
   osc.stop(now + 0.03);
+}
+
+function ensureAudioPlaying() {
+  if (!state.audioInitialized) {
+    initAudio();
+  }
+  if (audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  if (state.isMuted) {
+    state.isMuted = false;
+    audioToggle.classList.add('playing');
+    audioLabel.textContent = "Sound On";
+    if (masterGain) {
+      masterGain.gain.linearRampToValueAtTime(1, audioCtx.currentTime + 0.3);
+    }
+  }
+}
+
+export function setDroneVolume(volumePercent) {
+  ensureAudioPlaying();
+  if (!droneGain) return;
+  const now = audioCtx.currentTime;
+  const targetGain = (volumePercent / 100) * 0.5; // Max drone volume 0.5
+  droneGain.gain.linearRampToValueAtTime(targetGain, now + 0.1);
+}
+
+export function setNoiseVolume(volumePercent) {
+  ensureAudioPlaying();
+  if (!noiseGain) return;
+  const now = audioCtx.currentTime;
+  const targetGain = (volumePercent / 100) * 0.04; // Max noise volume 0.04
+  noiseGain.gain.linearRampToValueAtTime(targetGain, now + 0.1);
+}
+
+export function playPadChime(padIndex) {
+  ensureAudioPlaying();
+  if (!audioCtx) return;
+  
+  const now = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const gainNode = audioCtx.createGain();
+  
+  osc.type = 'sine';
+  
+  // Custom pitches for pad buttons:
+  // Pad 0, 1: C Major Pentatonic (261.63, 329.63)
+  // Pad 2, 3: A Minor Pentatonic (220.00, 392.00)
+  // Pad 4, 5: D Minor Pentatonic (293.66, 440.00)
+  const pitches = [261.63, 329.63, 220.00, 392.00, 293.66, 440.00];
+  const pitch = pitches[padIndex] || 440.00;
+  
+  osc.frequency.setValueAtTime(pitch, now);
+  
+  gainNode.gain.setValueAtTime(0, now);
+  gainNode.gain.linearRampToValueAtTime(0.1, now + 0.02); // sharp attack
+  gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 1.5); // long decay
+  
+  osc.connect(gainNode);
+  gainNode.connect(masterGain || audioCtx.destination);
+  
+  osc.start(now);
+  osc.stop(now + 1.6);
 }

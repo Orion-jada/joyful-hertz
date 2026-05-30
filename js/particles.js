@@ -27,6 +27,7 @@ class Particle {
     // Firing neuron configurations
     this.glowStrength = 0;
     this.lastFired = 0;
+    this.baseY = Math.random() * state.height;
   }
   
   // Fire electrical impulse to connected neighbors
@@ -92,7 +93,7 @@ class Particle {
     } 
     else if (s === 'reprieve') {
       this.orbitAngle += this.orbitSpeed * 3;
-      this.y = (state.height / 2) + Math.sin(this.x * 0.005 + this.orbitAngle) * 150 + Math.cos(this.x * 0.02) * 40;
+      this.y = this.baseY + Math.sin(this.x * 0.005 + this.orbitAngle) * 50 + Math.cos(this.x * 0.02) * 15;
       this.x += 1.5;
       this.color = { r: 239, g: 68, b: 68 }; // Crimson red
     } 
@@ -104,7 +105,7 @@ class Particle {
     else if (s === 'vortex') {
       // Flowing wave of nodes (Microsoft/OpenAI teal vs Google/Bard purple, dynamically synced)
       this.orbitAngle += this.orbitSpeed * 0.4;
-      this.y = (state.height / 2) + Math.sin(this.x * 0.004 + this.orbitAngle) * 180 + Math.cos(this.x * 0.012) * 40;
+      this.y = this.baseY + Math.sin(this.x * 0.004 + this.orbitAngle) * 60 + Math.cos(this.x * 0.012) * 15;
       this.x += 1.2;
       
       if (state.activeChapter === 10) {
@@ -130,7 +131,7 @@ class Particle {
     else if (s === 'frontier') {
       // Fluid matrix wave of nodes
       this.orbitAngle += this.orbitSpeed * 0.3;
-      this.y = (state.height / 2) + Math.sin(this.x * 0.003 + this.orbitAngle) * 200;
+      this.y = this.baseY + Math.sin(this.x * 0.003 + this.orbitAngle) * 70;
       this.x += 0.8;
       this.color = { r: 6, g: 182, b: 212 }; // Cyan matching #06b6d4
     }
@@ -205,10 +206,10 @@ class Particle {
           this.vibrateOffset.y += (Math.random() - 0.5) * force * 10;
         }
       } else if (s === 'vortex' || s === 'pulses' || s === 'frontier' || s === 'agentic') {
-        radius = 240;
-        forceStrength = 4.0; // Repelling force for laminar deflection
+        radius = 155;
+        forceStrength = 1.6; // Softer, toned-down repelling force for laminar deflection
         if (dist < radius) {
-          const force = (radius - dist) / radius;
+          const force = Math.pow((radius - dist) / radius, 2); // Quadratic fade off to prevent harsh circle boundaries
           this.x += (dx / dist) * force * forceStrength;
           this.y += (dy / dist) * force * forceStrength;
         }

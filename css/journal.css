@@ -253,7 +253,7 @@ body.chatgpt-active .toc-item:hover {
   font-size: 1.25rem;
   font-weight: 700;
   margin-bottom: 0.4rem;
-  color: var(--color-text);
+  color: var(--color-primary);
   transition: color 0.2s;
 }
 
@@ -338,6 +338,7 @@ body.chatgpt-active .toc-item-title {
 }
 
 .form-input {
+  width: 100%;
   background: rgba(15, 23, 42, 0.5);
   border: 1px solid var(--glass-border);
   border-radius: 12px;
@@ -880,6 +881,199 @@ body.chatgpt-active .drawer-body {
   animation-duration: 0.5s;
 }
 
+/* ==========================================
+   5d. Sandbox Page & Game Cards Styles
+   ========================================== */
+
+.sandbox-dashboard {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 2.2rem;
+  max-width: 1100px;
+  width: 100%;
+  margin-top: 1.5rem;
+  margin-bottom: 4rem;
+  align-items: start;
+}
+
+.sandbox-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.sandbox-sidebar {
+  display: block;
+}
+
+.game-card {
+  display: flex;
+  flex-direction: column;
+  padding: 2.2rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.4s;
+}
+
+.game-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--accent, var(--color-primary));
+  opacity: 0.8;
+}
+
+.game-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.02);
+}
+
+.back-hub-link, .back-featured-link {
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-body);
+}
+
+.back-hub-link:hover, .back-featured-link:hover {
+  color: var(--color-text) !important;
+  transform: translateX(-4px);
+}
+
+.launch-link {
+  transition: transform 0.3s ease;
+}
+
+.game-card:hover .launch-link {
+  transform: translateX(4px);
+}
+
+.game-header {
+  margin-bottom: 1.5rem;
+}
+
+.game-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.game-title {
+  font-family: var(--font-body);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 0.3rem;
+  letter-spacing: -0.01em;
+}
+
+.game-desc {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+/* Quiz Styling */
+.quiz-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.question-text {
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 0.8rem;
+  color: var(--color-text);
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.quiz-opt {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  text-align: left;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quiz-opt:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--color-accent-teal);
+  transform: translateX(4px);
+}
+
+/* Audio Pad launchpad styling */
+.audio-pad:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: var(--pad-color) !important;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+.audio-pad:active {
+  transform: scale(0.95);
+}
+
+.sound-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+  transition: background 0.3s;
+}
+
+.sound-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-accent-red);
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+  transition: transform 0.1s;
+}
+
+.sound-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Responsive Overrides */
+@media (max-width: 1024px) {
+  .sandbox-dashboard {
+    grid-template-columns: 1fr;
+  }
+  .sandbox-sidebar {
+    order: 2;
+  }
+  .sandbox-main {
+    order: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .sandbox-main {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Responsive Grid Adaptation */
 @media (max-width: 960px) {
   .journal-grid {
@@ -931,3 +1125,180 @@ body.chatgpt-active .drawer-body {
     padding: 1.5rem;
   }
 }
+
+/* ==========================================
+   Interactive Satire Flowchart Styles
+   ========================================== */
+.satire-flowchart-container {
+  background: rgba(8, 13, 22, 0.55);
+  border: 1px solid rgba(244, 63, 94, 0.15);
+  border-radius: 20px;
+  padding: 2.5rem;
+  margin: 3rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(244, 63, 94, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.flowchart-tree {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flowchart-node {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1.1rem 2.2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  min-width: 200px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  user-select: none;
+}
+
+.flowchart-node:hover, .flowchart-node.active {
+  background: rgba(244, 63, 94, 0.08);
+  border-color: rgba(244, 63, 94, 0.6);
+  transform: translateY(-3px);
+  box-shadow: 0 0 25px rgba(244, 63, 94, 0.25), inset 0 0 8px rgba(244, 63, 94, 0.15);
+}
+
+.flowchart-node.core-node {
+  border-color: rgba(244, 63, 94, 0.3);
+}
+
+.flowchart-node.core-node:hover, .flowchart-node.core-node.active {
+  border-color: rgba(244, 63, 94, 0.85);
+  box-shadow: 0 0 30px rgba(244, 63, 94, 0.35), inset 0 0 10px rgba(244, 63, 94, 0.2);
+}
+
+.node-label {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted-light);
+  margin-bottom: 0.25rem;
+}
+
+.flowchart-node:hover .node-label, .flowchart-node.active .node-label {
+  color: #fff;
+  text-shadow: 0 0 8px rgba(244, 63, 94, 0.5);
+}
+
+.node-subtitle {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.flowchart-node:hover .node-subtitle, .flowchart-node.active .node-subtitle {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Connectors */
+.flowchart-connectors {
+  width: 100%;
+  max-width: 600px;
+  height: 60px;
+  position: relative;
+  margin: 0.5rem 0;
+}
+
+.connector-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.connector-line {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 2.5;
+  transition: all 0.35s ease;
+  stroke-dasharray: 6 4;
+}
+
+.connector-line.active {
+  stroke: rgba(244, 63, 94, 0.8);
+  stroke-width: 3;
+  stroke-dasharray: none;
+  filter: drop-shadow(0px 0px 5px rgba(244, 63, 94, 0.8));
+}
+
+.flowchart-children {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 760px;
+  justify-items: center;
+}
+
+/* Details Panel */
+.flowchart-detail-panel {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(244, 63, 94, 0.1);
+  border-radius: 12px;
+  padding: 1.8rem;
+  text-align: left;
+  transition: all 0.3s ease;
+  min-height: 120px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.flowchart-detail-panel.highlighted {
+  border-color: rgba(244, 63, 94, 0.4);
+  box-shadow: 0 0 20px rgba(244, 63, 94, 0.15), inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.detail-title {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-accent-red);
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.detail-desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text-muted-light);
+  line-height: 1.6;
+}
+
+/* Responsive Flowchart layout */
+@media (max-width: 768px) {
+  .flowchart-children {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .flowchart-connectors {
+    display: none; /* Hide SVG connectors on stacked view */
+  }
+  .satire-flowchart-container {
+    padding: 1.5rem;
+  }
+  .flowchart-node {
+    width: 100%;
+    max-width: 320px;
+  }
+  .flowchart-tree {
+    gap: 1.5rem;
+  }
+}
+

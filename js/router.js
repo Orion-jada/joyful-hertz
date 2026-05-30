@@ -9,7 +9,12 @@ import {
   submissionsForm, 
   successMsg 
 } from './state.js';
-import { updateAudioStateForPage } from './audio.js';
+import { 
+  updateAudioStateForPage,
+  setDroneVolume,
+  setNoiseVolume,
+  playPadChime
+} from './audio.js';
 
 // We import updateActiveChapter from the parent app.js (using relative path)
 import { updateActiveChapter } from '../app.js';
@@ -209,6 +214,20 @@ export function navigateToPage(targetPageId, triggerPush = true) {
       document.title = "Agents | SYNAPSE";
     } else if (targetPageId === 'curated') {
       document.title = "Curated | SYNAPSE";
+    } else if (targetPageId === 'sandbox') {
+      document.title = "Cortex Labs | SYNAPSE";
+    } else if (targetPageId === 'quiz') {
+      document.title = "Humanity Alignment Quiz | SYNAPSE";
+    } else if (targetPageId === 'scribe') {
+      document.title = "CortexScribe Word Solver | SYNAPSE";
+    } else if (targetPageId === 'encrypt') {
+      document.title = "Mnemosyne Memory Encrypter | SYNAPSE";
+    } else if (targetPageId === 'decrypt') {
+      document.title = "Mnemosyne Memory Decrypter | SYNAPSE";
+    } else if (targetPageId === 'soundboard') {
+      document.title = "Acoustic Synapses Soundboard | SYNAPSE";
+    } else if (targetPageId === 'satire') {
+      document.title = "A Modest Proposal | SYNAPSE";
     } else if (targetPageId === 'featured') {
       document.title = "Featured Issue | SYNAPSE";
     } else if (targetPageId === 'article') {
@@ -237,9 +256,15 @@ export function navigateToPage(targetPageId, triggerPush = true) {
       } else if (targetPageId === 'agents') {
         state.canvasState = 'vortex';
         updateAudioStateForPage('agents');
+      } else if (targetPageId === 'satire') {
+        state.canvasState = 'vortex';
+        updateAudioStateForPage('satire');
       } else if (targetPageId === 'curated') {
         state.canvasState = 'pulses';
         updateAudioStateForPage('curated');
+      } else if (['sandbox', 'quiz', 'scribe', 'encrypt', 'decrypt', 'soundboard'].includes(targetPageId)) {
+        state.canvasState = 'pulses';
+        updateAudioStateForPage(targetPageId);
       } else if (targetPageId === 'featured') {
         state.canvasState = 'vortex';
         updateAudioStateForPage('featured');
@@ -289,8 +314,22 @@ function closeDrawer() {
     document.title = "Manifesto | SYNAPSE";
   } else if (state.activePage === 'agents') {
     document.title = "Agents | SYNAPSE";
+  } else if (state.activePage === 'satire') {
+    document.title = "A Modest Proposal | SYNAPSE";
   } else if (state.activePage === 'curated') {
     document.title = "Curated | SYNAPSE";
+  } else if (state.activePage === 'sandbox') {
+    document.title = "Cortex Labs | SYNAPSE";
+  } else if (state.activePage === 'quiz') {
+    document.title = "Humanity Alignment Quiz | SYNAPSE";
+  } else if (state.activePage === 'scribe') {
+    document.title = "CortexScribe Word Solver | SYNAPSE";
+  } else if (state.activePage === 'encrypt') {
+    document.title = "Mnemosyne Memory Encrypter | SYNAPSE";
+  } else if (state.activePage === 'decrypt') {
+    document.title = "Mnemosyne Memory Decrypter | SYNAPSE";
+  } else if (state.activePage === 'soundboard') {
+    document.title = "Acoustic Synapses Soundboard | SYNAPSE";
   } else if (state.activePage === 'article') {
     document.title = "An Accelerated History of AI | SYNAPSE";
   } else {
@@ -435,6 +474,264 @@ export function initRouter() {
     });
   }
 
+  // CortexScribe Typist AI Buzzword Scanner
+  const scribeInput = document.getElementById('scribe-input');
+  const scribeScore = document.getElementById('scribe-score');
+  const scribeProgress = document.getElementById('scribe-progress');
+  const scribeStatus = document.getElementById('scribe-status');
+  const scribeBadgeIndicator = document.getElementById('scribe-badge-indicator');
+  const scribeFlagged = document.getElementById('scribe-flagged');
+  const scribeWordList = document.getElementById('scribe-word-list');
+
+  const aiBuzzwords = [
+    'delve', 'testament', 'tapestry', 'realm', 'beacon', 
+    'catalyst', 'pivotal', 'leverage', 'robust', 'synergy', 
+    'paradigm', 'furthermore', 'in conclusion', 'demystify'
+  ];
+
+  if (scribeInput) {
+    scribeInput.addEventListener('keydown', () => {
+      import('./audio.js').then(module => {
+        module.playKeypressSound();
+      });
+    });
+
+    scribeInput.addEventListener('input', () => {
+      const text = scribeInput.value.toLowerCase();
+      const detected = [];
+      const wordCounts = {};
+
+      aiBuzzwords.forEach(word => {
+        const regex = new RegExp(`\\b${word}\\b`, 'g');
+        const matches = text.match(regex);
+        if (matches) {
+          detected.push(word);
+          wordCounts[word] = matches.length;
+        }
+      });
+
+      let penalty = 0;
+      detected.forEach(word => {
+        penalty += 15 + (wordCounts[word] - 1) * 5;
+      });
+
+      const score = Math.max(0, 100 - penalty);
+      if (scribeScore) scribeScore.textContent = `${score}%`;
+      if (scribeProgress) scribeProgress.style.width = `${score}%`;
+
+      if (scribeStatus && scribeBadgeIndicator && scribeProgress) {
+        if (score === 100) {
+          scribeStatus.textContent = 'Purely Organic Writing';
+          scribeProgress.style.backgroundColor = 'var(--color-primary)';
+          scribeBadgeIndicator.style.backgroundColor = 'var(--color-primary)';
+          scribeBadgeIndicator.style.boxShadow = '0 0 8px var(--color-primary)';
+        } else if (score >= 60) {
+          scribeStatus.textContent = 'Slightly Synthesized';
+          scribeProgress.style.backgroundColor = 'var(--color-accent-teal)';
+          scribeBadgeIndicator.style.backgroundColor = 'var(--color-accent-teal)';
+          scribeBadgeIndicator.style.boxShadow = '0 0 8px var(--color-accent-teal)';
+        } else if (score >= 30) {
+          scribeStatus.textContent = 'High Machine Probability';
+          scribeProgress.style.backgroundColor = 'var(--color-accent-gold)';
+          scribeBadgeIndicator.style.backgroundColor = 'var(--color-accent-gold)';
+          scribeBadgeIndicator.style.boxShadow = '0 0 8px var(--color-accent-gold)';
+        } else {
+          scribeStatus.textContent = 'Warning: Pure Autocomplete';
+          scribeProgress.style.backgroundColor = 'var(--color-accent-red)';
+          scribeBadgeIndicator.style.backgroundColor = 'var(--color-accent-red)';
+          scribeBadgeIndicator.style.boxShadow = '0 0 8px var(--color-accent-red)';
+        }
+      }
+
+      if (scribeFlagged && scribeWordList) {
+        if (detected.length > 0) {
+          scribeFlagged.style.display = 'block';
+          scribeWordList.innerHTML = '';
+          detected.forEach(word => {
+            const badge = document.createElement('span');
+            badge.style.background = 'rgba(255,255,255,0.05)';
+            badge.style.border = '1px solid rgba(255,255,255,0.1)';
+            badge.style.padding = '0.2rem 0.5rem';
+            badge.style.borderRadius = '8px';
+            badge.style.fontSize = '0.7rem';
+            badge.style.color = 'var(--color-accent-red)';
+            badge.style.fontWeight = 'bold';
+            badge.textContent = `${word} (x${wordCounts[word]})`;
+            scribeWordList.appendChild(badge);
+          });
+        } else {
+          scribeFlagged.style.display = 'none';
+        }
+      }
+    });
+  }
+
+  // Mnemosyne Memory Encrypter
+  const encryptInput = document.getElementById('encrypt-input');
+  const encryptOutputPane = document.getElementById('encrypt-output-pane');
+  const encryptOutputText = document.getElementById('encrypt-output-text');
+  const btnEncryptAction = document.getElementById('btn-encrypt-action');
+
+  let encInterval = null;
+
+  if (encryptInput) {
+    encryptInput.addEventListener('keydown', () => {
+      import('./audio.js').then(module => {
+        module.playKeypressSound();
+      });
+    });
+  }
+
+  if (btnEncryptAction && encryptInput && encryptOutputPane && encryptOutputText) {
+    btnEncryptAction.addEventListener('click', () => {
+      const text = encryptInput.value.trim();
+      if (!text) {
+        alert('Please enter a memory to encrypt first!');
+        return;
+      }
+
+      encryptOutputPane.style.display = 'block';
+      btnEncryptAction.disabled = true;
+
+      import('./audio.js').then(module => { module.playClickSound(); });
+
+      const chars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$*&%?[]{}';
+      let ticks = 0;
+      
+      if (encInterval) clearInterval(encInterval);
+
+      encInterval = setInterval(() => {
+        let scrambled = '';
+        for (let i = 0; i < Math.min(text.length, 60); i++) {
+          if (text[i] === ' ') scrambled += ' ';
+          else scrambled += chars[Math.floor(Math.random() * chars.length)];
+        }
+        encryptOutputText.textContent = scrambled + '...';
+        ticks++;
+
+        if (ticks >= 15) {
+          clearInterval(encInterval);
+          const base64 = btoa(unescape(encodeURIComponent(text)));
+          encryptOutputText.textContent = `KEY::${base64}`;
+          btnEncryptAction.disabled = false;
+        }
+      }, 60);
+    });
+  }
+
+  // Mnemosyne Memory Decrypter
+  const decryptInput = document.getElementById('decrypt-input');
+  const decryptOutputPane = document.getElementById('decrypt-output-pane');
+  const decryptOutputText = document.getElementById('decrypt-output-text');
+  const btnDecryptAction = document.getElementById('btn-decrypt-action');
+
+  let decInterval = null;
+
+  if (decryptInput) {
+    decryptInput.addEventListener('keydown', () => {
+      import('./audio.js').then(module => {
+        module.playKeypressSound();
+      });
+    });
+  }
+
+  if (btnDecryptAction && decryptInput && decryptOutputPane && decryptOutputText) {
+    btnDecryptAction.addEventListener('click', () => {
+      const text = decryptInput.value.trim();
+      if (!text) {
+        alert('Please paste an encrypted key to decrypt first!');
+        return;
+      }
+
+      let hash = text;
+      if (text.startsWith('KEY::')) {
+        hash = text.substring(5);
+      }
+
+      decryptOutputPane.style.display = 'block';
+      btnDecryptAction.disabled = true;
+
+      import('./audio.js').then(module => { module.playClickSound(); });
+
+      let decrypted = '';
+      try {
+        decrypted = decodeURIComponent(escape(atob(hash)));
+      } catch (err) {
+        decrypted = 'INVALID HASH: Check your encryption key format.';
+      }
+
+      const chars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$*&%?[]{}';
+      let ticks = 0;
+
+      if (decInterval) clearInterval(decInterval);
+
+      decInterval = setInterval(() => {
+        let scrambled = '';
+        for (let i = 0; i < Math.min(decrypted.length, 60); i++) {
+          if (decrypted[i] === ' ') scrambled += ' ';
+          else scrambled += chars[Math.floor(Math.random() * chars.length)];
+        }
+        decryptOutputText.textContent = scrambled + '...';
+        ticks++;
+
+        if (ticks >= 12) {
+          clearInterval(decInterval);
+          if (decrypted.startsWith('INVALID HASH')) {
+            decryptOutputText.textContent = decrypted;
+            decryptOutputText.style.color = 'var(--color-accent-red)';
+          } else {
+            decryptOutputText.textContent = `"${decrypted}"`;
+            decryptOutputText.style.color = '#38bdf8';
+          }
+          btnDecryptAction.disabled = false;
+        }
+      }, 50);
+    });
+  }
+
+  // Acoustic Synapses Soundboard Mixer Sliders & Chime Pads
+  const sliderDrone = document.getElementById('slider-drone');
+  const sliderNoise = document.getElementById('slider-noise');
+  const labelDroneVal = document.getElementById('label-drone-val');
+  const labelNoiseVal = document.getElementById('label-noise-val');
+  const audioPads = document.querySelectorAll('.audio-pad');
+
+  if (sliderDrone && labelDroneVal) {
+    sliderDrone.addEventListener('input', () => {
+      const val = parseInt(sliderDrone.value, 10);
+      labelDroneVal.textContent = `${val}%`;
+      setDroneVolume(val);
+    });
+  }
+
+  if (sliderNoise && labelNoiseVal) {
+    sliderNoise.addEventListener('input', () => {
+      const val = parseInt(sliderNoise.value, 10);
+      labelNoiseVal.textContent = `${val}%`;
+      setNoiseVolume(val);
+    });
+  }
+
+  if (audioPads.length > 0) {
+    audioPads.forEach(pad => {
+      pad.addEventListener('click', () => {
+        const padIdx = parseInt(pad.getAttribute('data-pad') || '0', 10);
+        playPadChime(padIdx);
+
+        // Flash visual pad keypress effect
+        pad.style.transform = 'scale(0.95)';
+        pad.style.background = 'rgba(255, 255, 255, 0.2)';
+        pad.style.boxShadow = '0 0 15px var(--pad-color)';
+        
+        setTimeout(() => {
+          pad.style.transform = 'none';
+          pad.style.background = '';
+          pad.style.boxShadow = '';
+        }, 150);
+      });
+    });
+  }
+
   // Popstate event handler for browser Back/Forward navigation
   window.addEventListener('popstate', (e) => {
     if (e.state && e.state.pageId) {
@@ -446,6 +743,13 @@ export function initRouter() {
       if (path === 'manifesto') pageId = 'manifesto';
       else if (path === 'agents') pageId = 'agents';
       else if (path === 'curated') pageId = 'curated';
+      else if (path === 'sandbox') pageId = 'sandbox';
+      else if (path === 'quiz') pageId = 'quiz';
+      else if (path === 'scribe') pageId = 'scribe';
+      else if (path === 'encrypt') pageId = 'encrypt';
+      else if (path === 'decrypt') pageId = 'decrypt';
+      else if (path === 'soundboard') pageId = 'soundboard';
+      else if (path === 'satire') pageId = 'satire';
       else if (path === 'featured') pageId = 'featured';
       else if (path === 'article') pageId = 'article';
       
@@ -468,6 +772,20 @@ export function resolveInitialRoute() {
     targetPageId = 'agents';
   } else if (path === 'curated') {
     targetPageId = 'curated';
+  } else if (path === 'sandbox') {
+    targetPageId = 'sandbox';
+  } else if (path === 'quiz') {
+    targetPageId = 'quiz';
+  } else if (path === 'scribe') {
+    targetPageId = 'scribe';
+  } else if (path === 'encrypt') {
+    targetPageId = 'encrypt';
+  } else if (path === 'decrypt') {
+    targetPageId = 'decrypt';
+  } else if (path === 'soundboard') {
+    targetPageId = 'soundboard';
+  } else if (path === 'satire') {
+    targetPageId = 'satire';
   } else if (path === 'featured') {
     targetPageId = 'featured';
   } else if (path === 'article') {
